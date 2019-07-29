@@ -47,23 +47,23 @@
     <!--<form  method="post">-->
     	<div class="fr_tab_body">
     		<div class="form-group has-feedback">
-	        <input type="phone" class="form-control" placeholder="账户">
+	        <input type="phone" id="account" class="form-control" placeholder="账户">
 	        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 	      </div>
 	      <div class="form-group has-feedback">
-	        <input type="password" class="form-control" placeholder="密码">
+	        <input type="password" id="password" class="form-control" placeholder="密码">
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
 	    </div>
       <div class="fr_tab_body" style="display:none;">
     		<div class="form-group has-feedback">
-	        <input type="phone" class="form-control" placeholder="手机号">
+	        <input type="phone" id="phone" class="form-control" placeholder="手机号">
 	        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 	      </div>
 	      <div class="form-group has-feedback">
 	      	<div class="row">
 	      		<div class="col-xs-7">
-	      			<input type="password" class="form-control" placeholder="验证码">
+	      			<input type="password" id="code" class="form-control" placeholder="验证码">
 	        		<!--<span class="glyphicon glyphicon-code form-control-feedback"></span>-->
 	      		</div>
 	      		<div class="col-xs-5">
@@ -89,7 +89,7 @@
         </div>
         <div class="col-xs-12">
         	<div style="margin-top:20px;">
-		      	<button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+		      	<button type="submit" id="login" class="btn btn-primary btn-block btn-flat">登录</button>
 		      </div>
         </div>
         <div class="col-xs-8">
@@ -118,6 +118,7 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="plugins/iCheck/icheck.min.js"></script>
+<script src="js/fr.js"></script>
 <script>
 $(function () {
     $('input').iCheck({
@@ -128,11 +129,50 @@ $(function () {
     
     
     $(".fr_tab li").click(function(){
-    	if(!$(this).hasClass("action")){
-    		$(this).addClass("action").siblings().removeClass("action")
-    		$(".fr_tab_body").eq($(this).index()).show().siblings(".fr_tab_body").hide();
+    	if($(this).index()==1){
+    		alert("功能暂未开放");
+    		return false;
+    	}
+//  	if(!$(this).hasClass("action")){
+//  		$(this).addClass("action").siblings().removeClass("action")
+//  		$(".fr_tab_body").eq($(this).index()).show().siblings(".fr_tab_body").hide();
+//  	}
+    	
+    })
+    
+    
+    function Login(){
+    	
+    }
+    $("#login").click(function(){
+    	var param={};
+    	if($(".fr_tab li.action").index()==0){
+    		param={
+	    		account:$("#account").val(),
+	    		password:$("#password").val()
+	    	}
+    	}else if($(".fr_tab li.on").index()==1){
+    		
     	}
     	
+    	$.ajax({
+    		type:"post",
+    		url:url+"/managerLogin/login",
+//  		async:"true",
+    		data:  JSON.stringify(param),
+    		contentType: "application/json",
+    		dataType:"json",
+    		success:function(res){
+    			if(res.returnCode==502){
+    				
+    				//调出弹框,显示返回的手机号码(脱敏),并提示用户输入该手机号码收到的短信验证码,
+    			}else if(res.returnCode==200){
+    				console.log(res.menuData);
+    			}else{
+    				alert(res.msg);
+    			}
+    		}
+    	})
     })
 });
 </script>
