@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>AdminLTE 2 | system</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+		<link rel="stylesheet" href="plugins/iCheck/all.css">
+		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+		<link rel="stylesheet" href="css/fr_card.css">
+		<link rel="stylesheet" href="css/fr_style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+			<div class="content-wrapper">
+				<section class="content-header ">
+					<ol class="breadcrumb">
+						<li>
+							<a href="#"><i class="fa fa-dashboard"></i>系统设置</a>
+						</li>
+						<li class="active">App设置</li>
+					</ol>
+				</section>
+				<section class="content">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<ul class="fr_tab clearfix">
+								<li class="active">版本设置</li>
+								<li>客服设置</li>
+							</ul>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="fr_tab_body fr_tab_body_active">
+									<button type="button" class="btn  margin btn-info" data-toggle="modal" data-target="#addVersion"><i class="fa fa-fw fa-plus"></i>新增</button>
+									<table id="example" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>版本号</th>
+												<th>版本说明</th>
+												<th>应用平台</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div class="fr_tab_body ">
+									<div class="row">
+										<div class="col-md-6">
+											<form role="form">
+												<div class="box-body">
+													<div class="form-group">
+														<label for="exampleInputEmail1">微信联系客服</label>
+														<input type="text" class="form-control" id="serviceWx" placeholder="">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputPassword1">QQ联系客服</label>
+														<input type="text" class="form-control" id="serviceQq" >
+													</div>
+													<div class="form-group">
+														<label for="exampleInputPassword1">电话联系客服</label>
+														<input type="text" class="form-control" id="servicePhone">
+													</div>
+													<button type="button" class="btn  margin btn-info" id='updateServiceInfo'>保存</button>
+												</div>
+												<div style="height:10px;"></div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<div class="modal fade in" id="addVersion">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+								<h4 class="modal-title">添加版本</h4>
+
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal">
+									<div class="box-body">
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-2 control-label">版本号</label>
+
+											<div class="col-sm-10">
+												<input type="email" class="form-control" id="version">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-2 control-label">版本说明</label>
+
+											<div class="col-sm-10">
+												<input type="password" class="form-control" id="intro">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-2 control-label">应用平台</label>
+											<div class="col-sm-10 radiosw">
+												<label>
+								                  	<input type="radio" name="r3" class="flat-red" value="1" checked>  ios
+								                </label>
+												<label>
+								                  	<input type="radio" name="r3" value="2" class="flat-red">  安卓
+								                </label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-2 control-label">下载链接</label>
+
+											<div class="col-sm-10">
+												<input type="password" class="form-control" id="link">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="versionSave">确认</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="dist/js/adminlte.min.js"></script>
+
+		<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+		<!--选择框-->
+		<script src="plugins/iCheck/icheck.min.js"></script>
+		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
+		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+		<script src="bower_components/moment/min/moment.min.js"></script>
+		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
+		<script src="js/nav.js"></script>
+		<script type="text/javascript">
+			function serviceInfo(){
+					var param = {
+						token: localStorage.getItem('fr_token'),
+					}
+					$.ajax({
+						type: "post",
+						url: url + "/system/serviceInfo",
+						//  		async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								$.each(res.data,function(index,item){
+									$("#"+index).val(item);
+								})
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				}
+			$(function() {
+				
+				serviceInfo();
+				
+				$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+					checkboxClass: 'icheckbox_flat-green',
+					radioClass: 'iradio_flat-green'
+				})
+
+				$(".fr_tab li").click(function() {
+					console.log(111);
+					if(!$(this).hasClass("active")) {
+						console.log(222);
+						$(this).addClass("active").siblings().removeClass("active")
+
+						$(".fr_tab_body").eq($(this).index()).addClass("fr_tab_body_active").siblings(".fr_tab_body").removeClass("fr_tab_body_active");
+					}
+				})
+
+				var table = $('#example').DataTable({
+					'ordering': false,
+					'lengthChange': false,
+					'searching': false,
+					'info': true,
+					"processing": true,
+					"serverSide": true,
+					"ajax": {
+						"type": 'post',
+						"url": url + '/system/appVersionList',
+						"contentType": "application/json",
+						"data": function(d) {
+							var data = {
+								curPage: d.start / 10 + 1,
+								pageSize: d.length,
+								token: localStorage.getItem('fr_token'),
+							}
+							return JSON.stringify(data)
+						},
+						"dataFilter": function(data) {
+							var datajson = eval('(' + data + ')')
+							//						reLogin(datajson.returnCode)
+							if(datajson.returnCode == 501) {
+								ToLogin(datajson)
+							} else if(datajson.returnCode == 500) {
+								alert(datajson.msg)
+								return false;
+							}
+							var json = {};
+							json.recordsTotal = datajson.data.totalCount;
+							json.recordsFiltered = datajson.data.totalCount;
+							json.data = datajson.data.data;
+							return JSON.stringify(json);
+						}
+					},
+					"columns": [{
+							data: 'version'
+						},
+						{
+							data: 'intro'
+						},
+						{
+							data: null,
+							render: function(data) {
+								var str = "";
+								if(data.platform == 1) {
+									str = "IOS";
+								} else if(data.platform == 2) {
+									str = "安卓";
+								}
+								return str;
+							}
+						}
+
+					]
+				})
+				
+				
+				
+				$("#versionSave").click(function() {
+					var param = {
+						token: localStorage.getItem('fr_token'),
+						platform: $(".radiosw div.checked").find("input").val(), //平台 1-ios 2-安卓
+						version: $("#version").val(), //版本号
+						intro: $("#intro").val(), //版本介绍
+						url: $("#link").val(), //下载地址
+					}
+					$.ajax({
+						type: "post",
+						url: url + "/system/addAppVersion",
+						//  		async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert("添加成功");
+								table.ajax.reload();
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				})
+				
+				$("#updateServiceInfo").click(function(){
+					var param = {
+						token: localStorage.getItem('fr_token'),
+						servicePhone: $("#servicePhone").val(),
+						serviceQq: $("#serviceQq").val(),
+						serviceWx: $("#serviceWx").val(), 
+					}
+					$.ajax({
+						type: "post",
+						url: url + "/system/updateServiceInfo",
+						//  		async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert("添加成功");
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,3 +1,10 @@
+console.log(window.location.href);
+function GetUrlRelativePath(){
+	var url = window.location.href;
+	var urlArray = url.split("/");
+	return urlArray[urlArray.length-1].split("?")[0];
+}
+console.log(GetUrlRelativePath());
 var header=
 '<header class="main-header">\
     <a href="index2.html" class="logo">\
@@ -56,93 +63,30 @@ var header=
   </header>'
 $(".wrapper").prepend(header);
 
-var leftNav = 
-'<aside class="main-sidebar">\
-	<section class="sidebar">\
-		 <ul class="sidebar-menu" data-widget="tree">\
-			<li class="header">HEADER</li>\
-			<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>\
-			<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>\
-			<li class="treeview"> <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a>\
-				<ul class="treeview-menu">\
-					<li><a href="#">Link in level 2</a></li>\
-					<li><a href="#">Link in level 2</a></li>\
-				</ul>\
-			</li>\
-		</ul>\
-	</section>\
-</aside>';
-console.log(leftNav)
-$(".wrapper").prepend(leftNav);
+var menuData = JSON.parse(localStorage.getItem("fr_menu"));
 
-var footer = 
-'<footer class="main-footer">\
-    <div class="pull-right hidden-xs">\
-      Anything you want\
-    </div>\
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.\
-</footer>';
-$(".wrapper").append(footer);
+var Nav ='<aside class="main-sidebar"><section class="sidebar"><ul class="sidebar-menu" data-widget="tree">';
 
-var power =
-[[{
-	name:"数据分析",
-	url:"home.html"
-}],
-[{
-	name:"用户列表",
-	url:"user_List.html"
-}],
-[{
-	name:"支付宝个码",
-	url:"code_pool_ali.html"
-},
-{
-	name:"银行卡",
-	url:"code_pool_card.html"
-},
-{
-	name:"商户码",
-	url:"code_pool_tenant.html"
-},
-{
-	name:"微信个码",
-	url:"code_pool_wet.html"
-}],
-[{
-	name:"订单列表",
-	url:"order_list.html"
-}],
-[{
-	name:"收支明细",
-	url:"finance_details.html"
-},
-{
-	name:"充值审核",
-	url:"finance_recharge.html"
-},
-{
-	name:"提现审核",
-	url:"finance_drawings.html"
-},
-{
-	name:"收款账户管理",
-	url:"finance_account.html"
-},
-{
-	name:"团队支出明细",
-	url:"finance_team.html"
-}],
-[{
-	name:"系统设置",
-	url:"system_set.html"
-},
-{
-	name:"账号管理",
-	url:"system_account.html"
-},
-{
-	name:"权限管理",
-	url:"system_power.html"
-}]];
-console.log(power);
+$.each(menuData, function(index , item) {
+	Nav+='<li class="treeview"><a href="#"><i class="fa fa-link"></i><span>'+index+'</span><span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span> </a><ul class="treeview-menu">'
+	$.each(item,function(index,items){
+		var active = "";
+		
+		items.url==GetUrlRelativePath()?(active="active"):(active="");
+		Nav+='<li class="'+ active +' li"><a href="'+items.url+'" pageId="'+items.pageId+'">'+items.name+'</a></li>'
+	})
+	Nav+='</ul></li>'
+});
+Nav += '</ul></section></aside>';
+
+$(".wrapper").prepend(Nav);
+$(".li.active").parents(".treeview").addClass("menu-open active")
+
+//var footer = 
+//'<footer class="main-footer">\
+//  <div class="pull-right hidden-xs">\
+//    Anything you want\
+//  </div>\
+//  <strong>Copyright &copy; 2019 <a href="#">Company</a>.</strong> All rights reserved.\
+//</footer>';
+//$(".wrapper").append(footer);

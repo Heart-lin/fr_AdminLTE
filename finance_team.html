@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -56,70 +52,69 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<ul>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>总支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="totalMoney">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>一级支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="level1Money">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span >二级支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="level2Money">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span >三级支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="level3Money">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>四级支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="level4Money">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>五级支出</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="level5Money">--</span>
 												</div>
 											</li>
 										</ul>
 									</div>
-									<table id="example2" class="table table-bordered table-hover picTable">
+									<table id="example" class="table table-bordered table-hover picTable">
 										<!--<thead>-->
 										<thead>
 											<tr>
-												<th>码ID</th>
-												<th>收款码类型</th>
-												<th>码图</th>
-												<th>订单数</th>
-												<th>成单数</th>
-												<th>成功率</th>
-												<th>状态</th>
+												<th>收益ID</th>
+												<th>所属订单</th>
+												<th>订单时间</th>
+												<th>订单金额</th>
+												<th>收益类型（第几级）</th>
+												<th>收益金额</th>
 											</tr>
 										</thead>
 										<!--</thead>-->
 										<tbody>
-											<tr>
+											<!--<tr>
 												<td>1.</td>
 												<td>Update software</td>
 												<td>123</td>
@@ -134,172 +129,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 												<td>
 													<a href="">查看</a>
 												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-150.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-90.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
+											</tr>-->
+											
+											
+											
+											
+											
 										</tbody>
 									</table>
 								</div>
@@ -321,20 +156,70 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$('#example1').DataTable()
-				$('#example2').DataTable({
-					'paging': true,
+				var table = $('#example').DataTable({
+					'ordering': false,
 					'lengthChange': false,
 					'searching': false,
-					'ordering': true,
 					'info': true,
-					'autoWidth': false
+					"processing": true,
+					"serverSide": true,
+					"ajax": {
+						"type": 'post',
+						"url": url + '/financial/teamIncomeList',
+						"contentType": "application/json",
+						"data": function(d) {
+							var data = {
+								curPage: d.start / 10 + 1,
+								pageSize: d.length,
+								token: localStorage.getItem('fr_token'),
+							}
+							return JSON.stringify(data)
+						},
+						"dataFilter": function(data) {
+							var datajson = eval('(' + data + ')')
+							//						reLogin(datajson.returnCode)
+							if(datajson.returnCode == 501) {
+								ToLogin(datajson)
+							} else if(datajson.returnCode == 500) {
+								alert(datajson.msg)
+								return false;
+							}
+							
+							$.each(datajson.data,function(index,item){
+								$(" [name="+index+"]").text(item);
+							})
+							$("[name=totalMoney]").html(datajson.data.totalMoney.money)
+							var json = {};
+							json.recordsTotal = datajson.data.totalCount;
+							json.recordsFiltered = datajson.data.totalCount;
+							json.data = datajson.data.data;
+							return JSON.stringify(json);
+						}
+					},
+					"columns": [
+						{data: 'id'},
+						{data: 'receiveOrderId'},
+						{data: 'time'},
+						{data: 'orderMoney'},
+						
+						{data: null,render:function(data){
+							return level(data.level);
+						}},
+						{data: 'money'},
+						
+					]
 				})
 
-				$('#reservation').daterangepicker()
+				$('#reservation').daterangepicker({
+					locale: {
+						format: "YYYY-MM-DD"
+					}
+				})
 			})
 		</script>
 	</body>

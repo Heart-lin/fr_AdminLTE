@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>AdminLTE 2 | order</title>
+		<title>AdminLTE 2 | finance</title>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -27,9 +27,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<section class="content-header ">
 					<ol class="breadcrumb">
 						<li>
-							<a href="#"><i class="fa fa-dashboard"></i>订单管理</a>
+							<a href="#"><i class="fa fa-dashboard"></i>财务管理</a>
 						</li>
-						<li class="active">订单列表</li>
+						<li class="active">收支明细</li>
 					</ol>
 				</section>
 				<section class="content">
@@ -53,237 +53,56 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<div class="details_card">
 								<div class="box-body">
 									<div class="box_body_card list list5" style="background-color: #E7F4FF;border-radius:5px;">
-										<ul>
+										<ul id="countData">
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>充值收入</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="rechargeMoney">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>订单收入</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="drawMoney">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>激活收入</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="activeMoney">--</span>
 												</div>
 											</li>
 											<li>
 												<div class="card_title">
-													<span>订单总量</span>
+													<span>利润</span>
 												</div>
 												<div class="card_content">
-													<span>38800</span>
+													<span name="incomeMoney">--</span>
 												</div>
 											</li>
 										</ul>
 									</div>
-									<table id="example2" class="table table-bordered table-hover picTable">
+									<table id="example" class="table table-bordered table-hover picTable">
 										<!--<thead>-->
 										<thead>
 											<tr>
-												<th>码ID</th>
-												<th>收款码类型</th>
-												<th>码图</th>
-												<th>订单数</th>
-												<th>成单数</th>
-												<th>成功率</th>
-												<th>状态</th>
+												<th>订单号</th>
+												<th>订单时间</th>
+												<th>项目</th>
+												<th>所属ID</th>
+												<th>金额</th>
+												<th>账户金额</th>
 											</tr>
 										</thead>
 										<!--</thead>-->
 										<tbody>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-green">+100.00</span></td>
-
-												<td>
-													<a href="">
-														<div class="fr_status fr_success">待付款</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-150.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-90.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
-											<tr>
-												<td>1.</td>
-												<td>Update software</td>
-												<td>123</td>
-												<td>1.</td>
-												<td><span class="text-red">-100.00</span></td>
-												<td>
-													<a href="">
-														<div class="fr_status fr_info">已完成</div>
-													</a>
-												</td>
-												<td>
-													<a href="">查看</a>
-												</td>
-											</tr>
+											
 										</tbody>
 									</table>
 								</div>
@@ -305,20 +124,77 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		
+		
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$('#example1').DataTable()
-				$('#example2').DataTable({
-					'paging': true,
+				var table = $('#example').DataTable({
+					'ordering': false,
 					'lengthChange': false,
 					'searching': false,
-					'ordering': true,
 					'info': true,
-					'autoWidth': false
+					"processing": true,
+					"serverSide": true,
+					"ajax": {
+						"type": 'post',
+						"url": url + '/financial/IODetails',
+						"contentType": "application/json",
+						"data": function(d) {
+							var data = {
+								startTime: TimeRange("reservation").startTime,
+								endTime: TimeRange("reservation").endTime,
+								curPage: d.start / 10 + 1,
+								pageSize: d.length,
+								userId: $('#userId').val(),
+								type:$("#type").val(),
+								token: localStorage.getItem('fr_token'),
+							}
+							return JSON.stringify(data)
+						},
+						"dataFilter": function(data) {
+							var datajson = eval('(' + data + ')')
+							//						reLogin(datajson.returnCode)
+							if(datajson.returnCode == 501) {
+								ToLogin(datajson)
+							} else if(datajson.returnCode == 500) {
+								alert(datajson.msg)
+								return false;
+							}
+							$.each(datajson.data.countData,function(index,item){
+								console.log(datajson.data.countData)
+								$("#countData [name="+index+"]").text(item);
+							})
+							
+							var json = {};
+							json.recordsTotal = datajson.data.totalCount;
+							json.recordsFiltered = datajson.data.totalCount;
+							json.data = datajson.data.data;
+							return JSON.stringify(json);
+						}
+					},
+					"columns": [
+						{data: 'id'},
+						{data: 'time'},
+						{data: null,render:function(data){
+							console.log(data.type)
+							return financialType(data.type);
+						}},
+						{data: 'userId'},
+						{data: null,render:function(data){
+							return financialMoney(data.money);
+						}},
+						{data: "accountMoney"}
+					]
 				})
 
-				$('#reservation').daterangepicker()
+				$('#reservation').daterangepicker({
+					locale: {
+						format: "YYYY-MM-DD"
+					}
+				})
 			})
 		</script>
 	</body>

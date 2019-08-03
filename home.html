@@ -48,8 +48,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 												<i class="fa fa-fw fa-question-circle"></i>
 											</div>
 										</div>
-										<div class="fr_card_title_total">
-											￥10000
+										<div class="fr_card_title_total" name="todayPayOrderCount">
+											----
 										</div>
 									</div>
 									<div class="fr_card_body">
@@ -88,8 +88,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 												<i class="fa fa-fw fa-question-circle"></i>
 											</div>
 										</div>
-										<div class="fr_card_title_total">
-											￥10000
+										<div class="fr_card_title_total" name="todayRegisterCount">
+											----
 										</div>
 									</div>
 									<div class="fr_card_body">
@@ -127,13 +127,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="fr_card">
 									<div class="fr_card_title">
 										<div class="fr_card_title_meta">
-											<span>用户总数</span>
+											<span>支付笔数</span>
 											<div class="fr_card_title_action">
 												<i class="fa fa-fw fa-question-circle"></i>
 											</div>
 										</div>
-										<div class="fr_card_title_total">
-											￥10000
+										<div class="fr_card_title_total" name="userCount">
+											----
 										</div>
 									</div>
 									<div class="fr_card_body">
@@ -173,7 +173,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</div>
 										</div>
 										<div class="fr_card_title_total">
-											40%
+											<span name="successRate1">40</span>%
 										</div>
 									</div>
 									<div class="fr_card_body">
@@ -232,31 +232,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<li>
 										<div class="list_card purple">
 											<h4 class="list_card_title">总成功率</h4>
-											<span class="list_card_number">95%</span>
+											<span class="list_card_number"><span name="totalRate">--</span>%</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card blue">
-											<h4 class="list_card_title">总成功率</h4>
-											<span class="list_card_number">95%</span>
+											<h4 class="list_card_title">支付宝个码成功率</h4>
+											<span class="list_card_number"><span name="aliRate"></span>%</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card green">
-											<h4 class="list_card_title">总成功率</h4>
-											<span class="list_card_number">95%</span>
+											<h4 class="list_card_title">微信个码成功率</h4>
+											<span class="list_card_number"><span name="wxRate"></span>%</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card yellow">
-											<h4 class="list_card_title">总成功率</h4>
-											<span class="list_card_number">95%</span>
+											<h4 class="list_card_title">银行卡个码成功率</h4>
+											<span class="list_card_number"><span name="bankRate"></span>%</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card red">
-											<h4 class="list_card_title">总成功率</h4>
-											<span class="list_card_number">95%</span>
+											<h4 class="list_card_title">商户码成功率</h4>
+											<span class="list_card_number"><span name="merchantRate"></span>%</span>
 										</div>
 									</li>
 								</ul>
@@ -270,32 +270,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 									<li>
 										<div class="list_card_count">
-											<h4 class="list_card_number">120120</h4>
-											<span class="list_card_title">总成功率</span>
+											<h4 class="list_card_number" name="totalOrderCount">--</h4>
+											<span class="list_card_title">总订单数</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card_count">
-											<h4 class="list_card_number">120120</h4>
-											<span class="list_card_title">总成功率</span>
+											<h4 class="list_card_number" name="aliCodeOrderCount">--</h4>
+											<span class="list_card_title">支付宝个码订单数</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card_count">
-											<h4 class="list_card_number">120120</h4>
-											<span class="list_card_title">总成功率</span>
+											<h4 class="list_card_number" name="wxCodeOrderCount">--</h4>
+											<span class="list_card_title">微信个码订单数</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card_count">
-											<h4 class="list_card_number">120120</h4>
-											<span class="list_card_title">总成功率</span>
+											<h4 class="list_card_number" name="bankOrderCount">--</h4>
+											<span class="list_card_title">银行卡个码订单数</span>
 										</div>
 									</li>
 									<li>
 										<div class="list_card_count">
-											<h4 class="list_card_number">120120</h4>
-											<span class="list_card_title">总成功率</span>
+											<h4 class="list_card_number" name="merchantOrderCount">--</h4>
+											<span class="list_card_title">商户码订单数</span>
 										</div>
 									</li>
 								</ul>
@@ -324,8 +324,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</div>
 						<div class="box-body chat">
 							<!-- chat item -->
-							<div class="box_content" style="height:300px;background-color: #ccc;">
-
+							<div class="box_content">
+								<div class="chart">
+	                <canvas id="lineChart" style="height:250px"></canvas>
+	              </div>
 							</div>
 
 						</div>
@@ -344,53 +346,184 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		
+		<script src="bower_components/chart.js/Chart.js"></script>
+		
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
-			$('#reservation').daterangepicker();
-			$('#count').daterangepicker();
-
+			var areaChartOptions = {
+      //Boolean - If we should show the scale at all
+      showScale               : true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines      : false,
+      //String - Colour of the grid lines
+      scaleGridLineColor      : 'rgba(0,0,0,.05)',
+      //Number - Width of the grid lines
+      scaleGridLineWidth      : 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines  : false,
+      //Boolean - Whether the line is curved between points
+      bezierCurve             : true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension      : 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot                : false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius          : 6,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth     : 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius : 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke           : true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth      : 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill             : true,
+      //String - A legend template
+      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio     : true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive              : true
+    }
 			function dataCountDetails() {
-				//		var param={
-				//			"token":11384101047335361
-				//		}
-				//		$.ajax({
-				//  		type:"post",
-				//  		url:url+"/data/dataCountDetails",
-				////  		async:"true",
-				//  		data:  JSON.stringify(param),
-				//  		contentType: "application/json",
-				//  		dataType:"json",
-				//  		success:function(res){
-				//  			if(res.returnCode==-1){
-				//  				//调出弹框,显示返回的手机号码(脱敏),并提示用户输入该手机号码收到的短信验证码,
-				//  			}else if(res.returnCode==200){
-				//  				console.log(res.menuData);
-				//  			}else{
-				//  				alert(res.msg);
-				//  			}
-				//  		}
-				//  	})
-				var res = {
-					"msg": "查询成功!",
-					"returnCode": "200",
-					"data": {
-						"wxCodeOrderCount": 0,
-						"totalRate": 0,
-						"wxRate": 0,
-						"bankRate": 0,
-						"merchantRate": 0,
-						"aliCodeOrderCount": 1,
-						"merchantOrderCount": 0,
-						"aliRate": 0,
-						"totalOrderCount": 1,
-						"bankOrderCount": 0
-					}
+				var param = {
+					"token": localStorage.getItem("fr_token")
 				}
-				
-				
-			}
-			$(function() {
+				$.ajax({
+					type: "post",
+					url: url + "/data/dataCountDetails",
+					async: true,
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							$.each(res.data, function(index, item) {
+								$("[name=" + index + "]").html(item);
+								//				  				console.log(res.menuData);
+							})
+						} else {
+							alert(res.msg);
+						}
+					}
+				})
 
+			}
+
+			function codeDataDetails() {
+				var time = TimeRange("reservation")
+				var param = {
+					token: localStorage.getItem("fr_token"),
+					startTime: time.startTime,
+					endTime: time.endTime
+				}
+				$.ajax({
+					type: "post",
+					url: url + "/data/codeDataDetails",
+					async: true,
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							$.each(res.data, function(index, item) {
+								$("[name=" + index + "]").html(item);
+							})
+
+						} else {
+							alert(res.msg);
+						}
+					}
+				})
+
+			}
+
+			function newCodeDetails() {
+				var time = TimeRange("count")
+				var param = {
+					token: localStorage.getItem("fr_token"),
+					startTime: time.startTime,
+					endTime: time.endTime
+				}
+				$.ajax({
+					type: "post",
+					url: url + "/data/newCodeDetails",
+					async: true,
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							var labels=[],charData=[];
+							$.each(res.data,function(index,item){
+								labels.push(index);
+								charData.push(item);
+							})
+							console.log(labels);
+							console.log(charData);
+							
+							var areaChartData = {
+								labels: labels,
+								datasets: [{
+									label               : 'Digital Goods',
+					        fillColor           : 'rgba(60,141,188,0.9)',
+					        strokeColor         : 'rgba(60,141,188,0.8)',
+					        pointColor          : '#3b8bba',
+					        pointStrokeColor    : 'rgba(60,141,188,1)',
+									pointHighlightFill: '#fff',
+									pointHighlightStroke: 'rgba(220,220,220,1)',
+									data: charData
+								}]
+							}
+
+							var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+							var lineChart = new Chart(lineChartCanvas)
+							var lineChartOptions = areaChartOptions
+							lineChartOptions.datasetFill = false
+							lineChart.Line(areaChartData, lineChartOptions)
+						} else {
+							alert(res.msg);
+						}
+					}
+				})
+			}
+
+			$(function() {
+				
+				
+				$('#reservation').daterangepicker({
+					locale: {
+						format: "YYYY-MM-DD"
+					}
+				});
+				$('#count').daterangepicker({
+					locale: {
+						format: "YYYY-MM-DD"
+					}
+				});
+				dataCountDetails();
+				codeDataDetails();
+				newCodeDetails();
+
+				$("#reservation").change(function() {
+					codeDataDetails();
+				})
+
+				$("#count").change(function() {
+					newCodeDetails();
+				})
 			})
 		</script>
 	</body>

@@ -48,31 +48,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="row">
 										<div class="col-xs-3">
 											<div class="details_card_left">用户ID：</div>
-											<div class="inline-block">20191010</div>
+											<div class="inline-block" name="id">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">手机号：</div>
-											<div class="inline-block">15859223437</div>
+											<div class="inline-block" name="phone">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">登录密码：</div>
-											<div class="inline-block">123456789</div>
+											<div class="inline-block" name="password">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">注册日期：</div>
-											<div class="inline-block">2019-01-02 23:13</div>
+											<div class="inline-block" name="time">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">直推ID：</div>
-											<div class="inline-block">3214321432</div>
+											<div class="inline-block" name="directUser">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">信用额度：</div>
-											<div class="inline-block">3000.00</div>
+											<div class="inline-block" name="creditBalance">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">交易密码：</div>
-											<div class="inline-block">3214321432</div>
+											<div class="inline-block" name="payPassword">--</div>
 										</div>
 									</div>
 								</div>
@@ -85,29 +85,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="row">
 									<div class="col-xs-3">
 										<div class="details_card_left">社区团队：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block" ><span name="teamUserCount">--</span>人</div>
 									</div>
 									<div class="col-xs-9"></div>
 									</br>
 									<div class="col-xs-2">
 										<div class="details_card_left">直推：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block"><span name="pushCount1">--</span>人</div>
 									</div>
 									<div class="col-xs-2">
 										<div class="details_card_left">二级：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block"><span name="pushCount2">--</span>人</div>
 									</div>
 									<div class="col-xs-2">
 										<div class="details_card_left">三级：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block"><span name="pushCount3">--</span>人</div>
 									</div>
 									<div class="col-xs-2">
 										<div class="details_card_left">四级：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block"><span name="pushCount4">--</span>人</div>
 									</div>
 									<div class="col-xs-2">
 										<div class="details_card_left">五级：</div>
-										<div class="inline-block">5人</div>
+										<div class="inline-block"><span name="pushCount5">--</span>人</div>
 									</div>
 
 								</div>
@@ -116,48 +116,44 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								社区收益
 							</div>
 							<div class="card_count">
-								总计：<span>4801201.00</span>
+								总计：<span name="totalOrderMoney">--</span>元
 							</div>
 							<div class="box-body">
-								<table class="table table-condensed">
-									<tr>
-										<th>订单号</th>
-										<th>所属ID</th>
-										<th>收款码类型</th>
-										<th>订单金额（元）</th>
-										<th>层数</th>
-										<th>状态</th>
-										<th>收益</th>
-									</tr>
-									<tr>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>支付宝</td>
-										<td>123</td>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>支付宝</td>
-									</tr>
-								</table>
+								<div class="row">
+									<div class="col-xs-12">
+										<table class="table table-condensed"id="income">
+											<tr>
+												<th>订单号</th>
+												<th>所属ID</th>
+												<th>收款码类型</th>
+												<th>订单金额（元）</th>
+												<th>层数</th>
+												<th>状态</th>
+												<th>收益</th>
+											</tr>
+										</table>
+									</div>
+								</div>
+								
+								
 							</div>
 
 							<div class="box-header with-border">
 								订单记录
 							</div>
 							<div class="card_count">
-								<div class="inline-block">总计：<span>4801201.00</span></div>
-								<div class="inline-block" style="margin-left:30px;">订单总额：<span>4801201.00</span></div>
-								<div class="inline-block" style="margin-left:30px;">成交订单总额：<span>4801201.00</span></div>
+								<div class="inline-block">总计：<span>--</span></div>
+								<div class="inline-block" style="margin-left:30px;">订单总额：<span>--</span></div>
+								<div class="inline-block" style="margin-left:30px;">成交订单总额：<span>--</span></div>
 							</div>
 							<div class="box-body">
-								<table class="table table-condensed">
+								<table class="table table-condensed" id="orderInfo">
 									<tr>
 										<th>订单号</th>
-										<th>所属ID</th>
+										<th>订单时间</th>
 										<th>收款码类型</th>
-										<th>订单金额（元）</th>
-										<th>层数</th>
 										<th>状态</th>
+										<th>总金额（元）</th>
 										<th>收益</th>
 									</tr>
 								</table>
@@ -167,7 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								码池
 							</div>
 							<div class="box-body">
-								<table class="table table-condensed picTable">
+								<table class="table table-condensed picTable"id="code">
 									<tr>
 										<th>码ID</th>
 										<th>收款码类型</th>
@@ -177,16 +173,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<th>成功率</th>
 										<th>状态</th>
 									</tr>
-									<tr>
-										<td>1.</td>
-										<td>Update software</td>
-										<td><img src="img/code.png" alt="" class="code" /></td>
-										<td>123</td>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>支付宝</td>
-									</tr>
-
 								</table>
 							</div>
 							<div style="height:50px;"></div>
@@ -202,8 +188,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="js/fr_func.js"></script>
 		<script src="js/nav.js"></script>
+		<script src="js/fr.js"></script>
 		<script type="text/javascript">
+			var param = {
+				token: localStorage.getItem("fr_token"),
+				id: GetRequest().id
+			}
+			$.ajax({
+				type: "post",
+				url: url + "/user/showUserInfo",
+				async: true,
+				data: JSON.stringify(param),
+				contentType: "application/json",
+				dataType: "json",
+				success: function(res) {
+					if(res.returnCode == 501) {
+						ToLogin(res)
+					} else if(res.returnCode == 200) {
+						$.each(res.data.basicInfo, function(index, item) {
+							$("[name="+ index +"]").html(item);
+						})
+						
+						$.each(res.data.incomeInfo,function(index,item){
+							$("#income").append("<tr> <td>"+item.receiveOrderId+"</td> <td>"+item.userId+"</td> <td>"+codeType(item.codeType)+"</td> <td>"+item.orderMoney+"</td> <td>"+item.level+"</td> <td>"+Income(item.status)+"</td> <td>"+item.money+"</td></tr>")
+						})//income
+						
+						
+						$.each(res.data.orderInfo,function(index,item){
+							$("#orderInfo").append("<tr> <td>"+"订单号"+"</td> <td>"+item.time+"</td> <td>"+item.receiveType+"</td> <td>"+orderStatus(item.status)+"</td> <td>"+item.money+"</td> <td>"+item.userIncome+"</td></tr>")
+						})//order
+						
+						$.each(res.data.codeInfo,function(index,item){
+							$("#code").append("<tr> <td>"+item.id+"</td> <td>"+codeType(item.type)+"</td> <td>"+item.codeUrl+"</td> <td>"+item.orderCount+"</td> <td>"+item.overOrderCount+"</td> <td>"+item.overRate+"</td><td>"+userStatus(item.status)+"</td></tr>")
+						})//
+						
+
+					} else {
+						alert(res.msg);
+					}
+				}
+			})
 		</script>
 	</body>
 

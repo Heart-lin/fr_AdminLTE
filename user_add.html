@@ -42,35 +42,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<label for="inputEmail3" class="col-sm-3 control-label">用户ID</label>
 		
 										<div class="col-sm-9">
-											<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+											<input type="email" class="form-control" id="userId" placeholder="Email">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">手机号</label>
 		
 										<div class="col-sm-9">
-											<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+											<input type="password" class="form-control" id="phone" placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">登录密码</label>
 		
 										<div class="col-sm-9">
-											<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+											<input type="password" class="form-control" id="password" placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword3" class="col-sm-3 control-label">交易密码</label>
 		
 										<div class="col-sm-9">
-											<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+											<input type="password" class="form-control" id="payPassword" placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-3">
 										</div>
 										<div class="col-sm-3">
-											<button type="button" class="btn btn-block btn-info">保存</button>
+											<button type="button" class="btn btn-block btn-info" id="add">保存</button>
 										</div>
 									</div>
 								</div>
@@ -90,8 +90,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="js/fr.js"></script>
+		<script src="js/fr_func.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			$("#add").click(function(){
+				var param = {
+					phone:$("#phone").val(),
+					password:$("#password").val(),//登录密码
+					payPassword:$("#payPassword").val(), //交易密码
+					token: localStorage.getItem("fr_token")
+				}
+				$.ajax({
+					type: "post",
+					url: url + "/user/addUser",
+					async: true,
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						}else if(res.returnCode == 200) {
+							window.location.href = 'user_list.html';
+						}else{
+							alert(res.msg)
+						}
+					},
+					error:function(){
+					
+					}
+				})
+			
+			})
+			
 		</script>
 	</body>
 

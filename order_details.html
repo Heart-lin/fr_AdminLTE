@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 
 	<head>
@@ -34,11 +30,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					</ol>
 				</section>
 				<section class="content">
-					<div class="box box-primary">
+					<div class="box box-primary"id="orderInfo">
 						<div class="details_card">
 							<div class="box-header ui-sortable-handle">
 								<i class="fa fa-comments-o"></i>
-								<h3 class="box-title">单号：<span>123456789</span></h3>
+								<h3 class="box-title">单号：<span name="id">--</span></h3>
 								<div class="box-tools pull-right">
 									<div class="btn-group">
 										<button type="button" class="btn btn-default">取消</button>
@@ -50,23 +46,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="row">
 									<div class="col-xs-3">
 										<div class="details_card_left">用户ID：</div>
-										<div class="inline-block">20191010</div>
+										<div class="inline-block" name="userId">--</div>
 									</div>
 									<div class="col-xs-3">
 										<div class="details_card_left">码类：</div>
-										<div class="inline-block">15859223437</div>
+										<div class="inline-block" name="codeType">--</div>
 									</div>
 									<div class="col-xs-6">
 										<div class="details_card_left">订单金额：</div>
-										<div class="inline-block"><span class="fr_bigText">￥1200.00</span></div>
+										<div class="inline-block"><span class="fr_bigText">￥<span name="money"></span></span></div>
 									</div>
 									<div class="col-xs-3">
 										<div class="details_card_left">创建时间：</div>
-										<div class="inline-block">2019-01-02 23:13</div>
+										<div class="inline-block" name="time">--</div>
 									</div>
 									<div class="col-xs-3">
 										<div class="details_card_left">订单状态：</div>
-										<div class="inline-block">3214321432</div>
+										<div class="inline-block" name="status">--</div>
 									</div>
 
 								</div>
@@ -129,21 +125,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="box-header ui-sortable-handle">
 							<h3 class="box-title">收款码信息</span></h3>
 						</div>
-						<div class="box-body">
+						<div class="box-body" id="codeInfo">
 							<div class="details_card" style="margin-bottom:20px;">
 								<div class="row">
 									<div class="col-xs-3">
 										<div>
 											<div class="details_card_left">收款码分类：</div>
-											<div class="inline-block">支付宝</div>
+											<div class="inline-block" name="codeType">--</div>
 										</div>
 										<div>
 											<div class="details_card_left">总收款金额：</div>
-											<div class="inline-block">1000.00</div>
+											<div class="inline-block" name="overOrderCount">--</div>
 										</div>
 										<div>
 											<div class="details_card_left">今日收款金额：</div>
-											<div class="inline-block">500.00</div>
+											<div class="inline-block" name="todayMoney">--</div>
 										</div>
 									</div>
 									<div class="col-xs-6">
@@ -151,31 +147,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<div class="col-xs-12">
 												<div>
 													<div class="details_card_left">添加时间：</div>
-													<div class="inline-block">2019-10-12 23:12</div>
+													<div class="inline-block" name="time">--</div>
 												</div>
 											</div>
 											<div class="col-xs-12">
 												<div>
 													<div class="details_card_left">账号：</div>
-													<div class="inline-block">2019101020191010</div>
+													<div class="inline-block" name="account">--</div>
 												</div>
 											</div>
 											<div class="col-xs-3">
 												<div>
 													<div class="details_card_left" style="width:60px;">订单数：</div>
-													<div class="inline-block">123</div>
+													<div class="inline-block" name="orderCount">--</div>
 												</div>
 											</div>
 											<div class="col-xs-3">
 												<div>
 													<div class="details_card_left" style="width:60px;">成单数：</div>
-													<div class="inline-block">3512</div>
+													<div class="inline-block" name="overOrderCount">--</div>
 												</div>
 											</div>
 											<div class="col-xs-3">
 												<div>
 													<div class="details_card_left" style="width:60px;">成单率：</div>
-													<div class="inline-block">90%</div>
+													<div class="inline-block"><span name="overRate">--</span>%</div>
 												</div>
 											</div>
 										</div>
@@ -194,81 +190,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<h3 class="box-title">收款分配</span></h3>
 						</div>
 						<div class="box-body">
-							<table id="example2" class="table table-bordered table-hover picTable">
+							<table id="example" class="table table-bordered table-hover picTable">
 								<!--<thead>-->
 								<thead>
 									<tr>
-										<th>码ID</th>
-										<th>收款码类型</th>
-										<th>码图</th>
-										<th>订单数</th>
-										<th>成单数</th>
-										<th>成功率</th>
-										<th>状态</th>
+										<th>收益类型</th>
+										<th>收益ID</th>
+										<th>收益金额</th>
+										<th>操作时间</th>
 									</tr>
 								</thead>
-								<!--</thead>-->
 								<tbody>
-									<tr>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>123</td>
-										<td>1.</td>
-										<td>Update software</td>
-
-										<td>
-											<a href="">
-												<div class="fr_status fr_success">待付款</div>
-											</a>
-										</td>
-										<td>
-											<a href="">查看</a>
-										</td>
-									</tr>
-									<tr>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>123</td>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>
-											<a href="">
-												<div class="fr_status fr_info">已完成</div>
-											</a>
-										</td>
-										<td>
-											<a href="">查看</a>
-										</td>
-
-									</tr>
-									<tr>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>123</td>
-										<td>1.</td>
-										<td>Update software</td>
-										<td>
-											<a href="">
-												<div class="fr_status fr_default">已失效</div>
-											</a>
-										</td>
-										<td>
-											<a href="">查看</a>
-										</td>
-
-									</tr>
 								</tbody>
-								<!--<tfoot>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                  <th>CSS grade</th>
-                  <th>CSS grade</th>
-                </tr>-->
-								</tfoot>
 							</table>
 						</div>
 					</div>
@@ -288,20 +221,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$('#example1').DataTable()
-				$('#example2').DataTable({
-					'paging': true,
-					'lengthChange': false,
-					'searching': false,
-					'ordering': true,
-					'info': true,
-					'autoWidth': false
-				})
+				var param = {
+					token: localStorage.getItem("fr_token"),
+					id: GetRequest().id
+				}
+				$.ajax({
+					type: "post",
+					url: url + "/order/orderDetails",
+					async: true,
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							$.each(res.data.codeInfo, function(index, item) {
+								if(index=="type"){
+									$("#codeInfo [name=codeType]").text(codeType(item));
+								}else{
+									$("#codeInfo [name=" + index + "]").text(item);
+								}
+							})
 
-				$('#reservation').daterangepicker()
+							$.each(res.data.orderInfo, function(index, item) {
+								
+								if(index=="receiveType"){
+									$("#orderInfo [name=codeType]").text(codeType(item));
+								}else{
+									$("#orderInfo [name=" + index + "]").text(item);
+								}
+							}) //orderInfo
+							$("#example tbody").empty();
+							$.each(res.data.incomeDetailsList,function(index,item){
+								$("#example tbody").append('<tr><td>'+ level(item.level) +'</td><td>'+ item.receiveOrderId +'</td><td>'+ item.money +'</td><td>'+ item.time +'</td></tr>')
+							})
+							
+							
+
+						} else {
+							alert(res.msg);
+						}
+					}
+				})
 			})
 		</script>
 	</body>
