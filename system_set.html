@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 
 	<head>
@@ -21,6 +17,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<style>
+			table td{
+				padding:10px;
+			}
+		</style>
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -43,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="about_card">
 							<div class="details_card">
 								<div class="box-body">
-									<table>
+											<table style="width:100%" border="1" cellspacing="0" cellpadding="0">
 										<tr>
 											<td>直推人数</td>
 											<td>一代抽成</td>
@@ -93,6 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<td>5%（2.5%）</td>
 										</tr>
 									</table>
+									
 								</div>
 							</div>
 						</div>
@@ -103,7 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="box-body">
 							<div class="row">
 								<div class="col-xs-4">
-									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">Email</label>
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
 									<div class="col-sm-10">
 										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
 									</div>
@@ -123,13 +125,143 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</div>
 						
 						<div class="box-header with-border">
-							领导人奖励设置
+							激活账号价格设置
 							<!-- /.box-tools -->
 						</div>
 						<div class="box-body">
 							<div class="row">
 								<div class="col-xs-4">
-									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">Email</label>
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="form-group"style="margin-top:10px;">
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red" checked>  开启
+						                </label>
+						                
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red">  关闭
+						                </label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="box-header with-border">
+							最低充值金额设置
+							<!-- /.box-tools -->
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="form-group"style="margin-top:10px;">
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red" checked>  开启
+						                </label>
+						                
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red">  关闭
+						                </label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="box-header with-border">
+							收益转信用最低金额设置
+							<!-- /.box-tools -->
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="form-group"style="margin-top:10px;">
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red" checked>  开启
+						                </label>
+						                
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red">  关闭
+						                </label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="box-header with-border">
+							提现最低金额设置
+							<!-- /.box-tools -->
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="form-group"style="margin-top:10px;">
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red" checked>  开启
+						                </label>
+						                
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red">  关闭
+						                </label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="box-header with-border">
+							信用点最低充值金额设置
+							<!-- /.box-tools -->
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="form-group"style="margin-top:10px;">
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red" checked>  开启
+						                </label>
+						                
+										<label style="line-height:20px;">
+						                  <input type="radio" name="r3" class="flat-red">  关闭
+						                </label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="box-header with-border">
+							收益分配最低信用点
+							<!-- /.box-tools -->
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-4">
+									<label for="inputEmail3" class="col-sm-2 control-label" style="line-height:34px;">金额</label>
 									<div class="col-sm-10">
 										<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
 									</div>
