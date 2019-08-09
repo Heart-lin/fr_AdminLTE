@@ -40,7 +40,7 @@
 							</ul>
 						</div>
 						<div class="box-body">
-							<div class="row">
+							
 								<div class="fr_tab_body fr_tab_body_active">
 									<button type="button" class="btn  margin btn-info" data-toggle="modal" data-target="#addVersion"><i class="fa fa-fw fa-plus"></i>新增</button>
 									<table id="example" class="table table-bordered table-hover">
@@ -55,7 +55,6 @@
 									</table>
 								</div>
 								<div class="fr_tab_body ">
-									<div class="row">
 										<div class="col-md-6">
 											<form role="form">
 												<div class="box-body">
@@ -95,21 +94,21 @@
 								<form class="form-horizontal">
 									<div class="box-body">
 										<div class="form-group">
-											<label for="inputEmail3" class="col-sm-2 control-label">版本号</label>
+											<label for="version" class="col-sm-2 control-label">版本号</label>
 
 											<div class="col-sm-10">
 												<input type="email" class="form-control" id="version">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="inputPassword3" class="col-sm-2 control-label">版本说明</label>
+											<label for="intro" class="col-sm-2 control-label">版本说明</label>
 
 											<div class="col-sm-10">
-												<input type="password" class="form-control" id="intro">
+												<input type="text" class="form-control" id="intro">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="inputPassword3" class="col-sm-2 control-label">应用平台</label>
+											<label class="col-sm-2 control-label">应用平台</label>
 											<div class="col-sm-10 radiosw">
 												<label>
 								                  	<input type="radio" name="r3" class="flat-red" value="1" checked>  ios
@@ -120,10 +119,10 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="inputPassword3" class="col-sm-2 control-label">下载链接</label>
+											<label for="link" class="col-sm-2 control-label">下载链接</label>
 
 											<div class="col-sm-10">
-												<input type="password" class="form-control" id="link">
+												<input type="text" class="form-control" id="link">
 											</div>
 										</div>
 									</div>
@@ -277,6 +276,8 @@
 								ToLogin(res)
 							} else if(res.returnCode == 200) {
 								alert("添加成功");
+								$("#addVersion").modal("hide");
+								$("#addVersion").find("input").val("");
 								table.ajax.reload();
 							} else {
 								alert(res.msg)

@@ -33,13 +33,14 @@
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<div class="inline-block">
-								<button type="button" class="btn btn-block btn-info"><i class="fa fa-fw fa-plus"></i>添加账号</button>
+								<a type="button" href="system_addPower.html" class="btn btn-block btn-info"><i class="fa fa-fw fa-plus"></i>添加角色</a>
 							</div>
 							<!-- /.box-tools -->
 						</div>
-						<div class="about_card">
+						<div class="box-body">
+							<div class="about_card">
 							<div class="details_card">
-								<table id="example2" class="table table-bordered table-hover">
+								<table id="example" class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th>序号</th>
@@ -49,20 +50,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Trident</td>
-											<td>Internet Explorer 4.0</td>
-											<td>Internet Explorer 4.0</td>
-											<td>
-												<!--class="btn btn-default"-->
-												<a href=""  data-toggle="modal" data-target="#modal-default">编辑</a>
-												<a href="" data-toggle="modal" data-target="#modal-default">编辑</a>
-											</td>
-										</tr>
+										
 									</tbody>
 								</table>
 							</div>
 						</div>
+						</div>
+						
 					</div>
 					<div class="modal fade" id="modal-default">
 						<div class="modal-dialog">
@@ -106,31 +100,38 @@
 											<div class="form-group">
 												<label for="inputPassword3" class="col-sm-3 control-label">所有岗位</label>
 												<div class="col-sm-9">
-													<select class="form-control select2" style="width: 100%;">
-														<option selected="selected">Alabama</option>
-														<option>Alaska</option>
-														<option>California</option>
-														<option>Delaware</option>
-														<option>Tennessee</option>
-														<option>Texas</option>
-														<option>Washington</option>
-													</select>
+													<select class="form-control select2" style="width: 100%;" id="getRoleList"></select>
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
-
-										<!-- /.box-footer -->
 									</form>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save changes</button>
+									<button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+									<button type="button" class="btn btn-primary">修改</button>
 								</div>
 							</div>
-							<!-- /.modal-content -->
 						</div>
-						<!-- /.modal-dialog -->
+					</div>
+					
+					<div class="modal fade" id="modal-delete">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">是否删除</h4>
+								</div>
+								<div class="modal-body">
+									<p>是否删除角色“<span id="modal-roleName"></span>”</p>
+									<input type="hidden" id="powerId"/>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+									<button type="button" class="btn btn-primary" id="modal-delete">确定</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 
@@ -149,18 +150,103 @@
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="js/fr_func.js"></script>
+		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$('#example1').DataTable()
-				$('#example2').DataTable({
-					'paging': true,
+				var table = $('#example').DataTable({
+					'ordering': false,
 					'lengthChange': false,
 					'searching': false,
-					'ordering': true,
 					'info': true,
-					'autoWidth': false
+					"processing": true,
+					"serverSide": true,
+					"ajax": {
+						"type": 'post',
+						"url": url + '/system/roleList',
+						"contentType": "application/json",
+						"data": function(d) {
+							var data = {
+								curPage: d.start / 10 + 1,
+								pageSize: d.length,
+								name: $("#name").val(),
+								token: localStorage.getItem('fr_token'),
+							}
+							return JSON.stringify(data)
+						},
+						"dataFilter": function(data) {
+							var datajson = eval('(' + data + ')')
+							//						reLogin(datajson.returnCode)
+							if(datajson.returnCode == 501) {
+								ToLogin(datajson)
+							} else if(datajson.returnCode == 500) {
+								alert(datajson.msg);
+								return false;
+							}
+							var json = {}
+							json.recordsTotal = datajson.data.totalCount;
+							json.recordsFiltered = datajson.data.totalCount;
+							json.data = datajson.data.data;
+							return JSON.stringify(json);
+						}
+					},
+					"columns": [{
+							data: 'id',
+						},
+						{
+							data: 'name'
+						},
+						{
+							data: 'roleDetails'
+						},
+						{
+							data: null,
+							render: function(data) {
+								console.log(data.id);
+								return "<button class='btn bg-green margin-r-5 updatePower' powerId=" + data.id +" name="+ data.name+">修改</button><button class='btn bg-green margin-r-5 deletePower' powerId =" + data.id + ">删除</button>";
+							}
+						}
+					]
 				})
+				
+				$("#example").on("click",".updatePower",function(){
+					localStorage.setItem("fr_roleName",$(this).attr("name"));
+					window.location.href="system_addPower.html?powerId="+$(this).attr("powerId");
+				})
+				
+				$("#example").on("click",".deletePower",function(){
+					$("#modal-roleName").text($(this).parents("td").siblings("td").eq(1).text());
+					$("#powerId").val($(this).attr("powerId"))
+					$("#modal-delete").modal("show");
+				})
+				
+				$("#modal-delete").click(function(){
+					$.ajax({
+					type: "post",
+					url: url + "system/delRole",
+					async: true,
+					contentType: "application/json",
+					dataType: 'json',
+					data: JSON.stringify({
+						token: localStorage.getItem('fr_token'),
+						id:$("#powerId").val(),
+						addManager:localStorage.getItem("fr_managerId")
+					}),
+					success:function(res){
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							alert("删除成功!");
+							$("#modal-delete").modal("hide");
+							table.draw(false);
+						}else{
+							alert(res.msg);
+						}
+					}
+				})
+				})
+				
 			})
 		</script>
 	</body>

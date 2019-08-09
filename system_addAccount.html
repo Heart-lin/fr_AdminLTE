@@ -140,14 +140,8 @@
 									<div class="form-group">
 										<label for="managerId" class="col-sm-3 control-label">所有岗位</label>
 										<div class="col-sm-9">
-											<select class="form-control select2" id="managerId" style="width: 100%;">
-												<option selected="selected" value="1">Alabama</option>
-												<option value="1">Alaska</option>
-												<option value="1">California</option>
-												<option value="1">Delaware</option>
-												<option value="1">Tennessee</option>
-												<option value="1">Texas</option>
-												<option value="1">Washington</option>
+											<select class="form-control select2" id="getRoleList" style="width: 100%;">
+												
 											</select>
 										</div>
 									</div>
@@ -182,10 +176,12 @@
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<script src="js/fr_func.js"></script>
+		<script src="js/get.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				getRoleList();
 				$("#add").click(function() {
 					console.log(111);
 					var param = {
@@ -195,14 +191,14 @@
 						phone: $("#phone").val(),
 						wx: $("#wx").val(),
 						name: $("#name").val(), //姓名或手机号
-						roleId: localStorage.getItem('fr_roleId'), //角色id
-						managerId: $("#managerId").val() //当前登录的管理员id
+						roleId: $("#getRoleList").val(), //角色id
+						managerId: localStorage.getItem('fr_managerId') //当前登录的管理员id
 					}
 					console.log(param);
 //					return false;
 					$.ajax({
 						type: "post",
-						url: url + "/system/addManager",
+						url: url + "system/addManager",
 //  					async:"true",
 						data: JSON.stringify(param),
 						contentType: "application/json",

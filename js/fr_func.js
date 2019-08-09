@@ -52,7 +52,7 @@ function TimeRange(id) {
 }
 
 function userStatus(status) {
-	var str="";
+	var str = "";
 	if(status == -1) {
 		str = '<a href=""><div class="fr_status fr_danger">封号</div></a>';
 	} else if(status == 1) {
@@ -63,22 +63,22 @@ function userStatus(status) {
 	return str;
 }
 
-function codeType(type){
-	var str="";
+function codeType(type) {
+	var str = "";
 	if(type == 1) {
 		str = '支付宝个码';
 	} else if(type == 2) {
 		str = '微信个码';
 	} else if(type == 3) {
 		str = '银行卡个码';
-	}else if(type == 4){
+	} else if(type == 4) {
 		str = '商户个码';
 	}
 	return str;
 }
 
-function orderStatus(status){
-	var str="";
+function orderStatus(status) {
+	var str = "";
 	if(status == 1) {
 		str = '<a href=""><div class="fr_status fr_info">进行中</div></a>';
 	} else if(status == 2) {
@@ -89,8 +89,8 @@ function orderStatus(status){
 	return str;
 }
 
-function Income(status){
-	var str="";
+function Income(status) {
+	var str = "";
 	if(status == 1) {
 		str = '<a href=""><div class="fr_status fr_info">待确认收款</div></a>';
 	} else if(status == 2) {
@@ -100,47 +100,50 @@ function Income(status){
 	}
 	return str;
 }
-function level(level){
-	var str="";
+
+function level(level) {
+	var str = "";
 	if(level == 1) {
 		str = '一级';
 	} else if(level == 2) {
 		str = '二级';
 	} else if(level == 3) {
 		str = '三级';
-	}else if(level == 4){
+	} else if(level == 4) {
 		str = '四级';
-	}else if(level == 5){
+	} else if(level == 5) {
 		str = '五级';
 	}
 	return str;
 }
-function financialType(type){
-	var str="";
+
+function financialType(type) {
+	var str = "";
 	if(type == 1) {
 		str = '激活';
 	} else if(type == 2) {
 		str = '充值';
 	} else if(type == 3) {
 		str = '提现';
-	}else if(type == 4){
+	} else if(type == 4) {
 		str = '收益';
 	}
 	console.log()
 	return str;
 }
 
-function financialMoney(num){
-	var str="";
-	if(num>0){
-		str='<p class="text-green">+'+num+'</p>';
-	}else{
-		str='<p class="text-red">'+num+'</p>';
+function financialMoney(num) {
+	var str = "";
+	if(num > 0) {
+		str = '<p class="text-green">+' + num + '</p>';
+	} else {
+		str = '<p class="text-red">' + num + '</p>';
 	}
 	return str;
 }
-function financialType(status){
-	var str="";
+
+function financialType(status) {
+	var str = "";
 	if(status == 1) {
 		str = '<a href=""><div class="fr_status fr_info">正在收款</div></a>';
 	} else if(status == 2) {
@@ -150,3 +153,4 @@ function financialType(status){
 	}
 	return str;
 }
+
