@@ -82,6 +82,9 @@ Nav += '</ul></section></aside>';
 $(".wrapper").prepend(Nav);
 $(".li.active").parents(".treeview").addClass("menu-open active")
 
+if($("#dataTable").length>0){
+	$.fn.dataTable.ext.errMode = 'none';
+}
 //var footer = 
 //'<footer class="main-footer">\
 //  <div class="pull-right hidden-xs">\
