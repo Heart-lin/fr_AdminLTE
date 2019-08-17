@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -34,13 +34,23 @@
 							<div class="">
 								<div class="inline-block">
 									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="reservation" />
+									<input type="text" class="form-control time" id="startTime" />
+									-
+									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
+									<span>用户id：</span>
+									<input type="text" placeholder="" id="userId"/>
 								</div>
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info">搜索</button>
+									<select id="status">
+										<option value="">全部状态</option>
+										<option value="-1">已风控</option>
+										<option value="1">正常</option>
+									</select>
+								</div>
+								<div class="inline-block">
+									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -71,7 +81,7 @@
 													<span>支付成功率</span>
 												</div>
 												<div class="card_content">
-													<span name="">没数据</span>
+													<span name="rate">--</span>
 												</div>
 											</li>
 											<li>
@@ -130,12 +140,21 @@
 		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
 				var table = $('#example').DataTable({
 				'ordering': false,
 				'lengthChange': false,
@@ -151,8 +170,8 @@
 						var data = {
 							curPage:d.start/10+1,
 							pageSize:d.length,
-							startTime:TimeRange("reservation").startTime,
-							endTime:TimeRange("reservation").endTime,
+							startTime:$("#startTime").val(),
+							endTime:$("#endTime").val(),
 							status:$('#status').val(),
 							userId:$('#userId').val(),
 							token:localStorage.getItem('fr_token'),
@@ -172,8 +191,9 @@
 						$.each(datajson.data.countData,function(index,item){
 							$("[name="+ index +"]").text(item);
 						})
-						
-						
+						if(datajson.data.countData){
+								$("[name=rate]").text(count(datajson.data.countData.totalOverOrderCount,datajson.data.countData.totalOrderCount));
+							}
 						var json = {};
 						json.recordsTotal = datajson.data.totalCount;
 						json.recordsFiltered = datajson.data.totalCount;
@@ -184,28 +204,28 @@
 				},
 				"columns":[
 					{data:'id'},
-					{data:'account'},
-					{data:'codeUrl'},
 					{data:'phone'},
+					{data:'codeUrl'},
+					{data:'account'},
 					{data:'udid'},
-					{data:'startTime'},
+					{data:'time'},
 					{data:null,render:function(data){
 						var str = data.orderCount+"/"+data.overOrderCount+"/"+data.overRate
 						return str;
 					}},
 					{data:'money'},
 					{data:null,render:function(data){
-						return userStatus(data.status);
+						return codeStatus(data.status);
 					}},
 //					{data:null,render:function(data){return '<button class="btn bg-green margin-r-5 look" userId='+data.id+'>查看</button><button class="btn bg-green margin-r-5 close_user" userId='+data.id+'>封号</button>'}}
 					
 				]
 			})
 
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
+				
+				
+				$("#search").click(function(){
+					table.ajax.reload();
 				})
 			})
 		</script>

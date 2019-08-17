@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
 		<link rel="stylesheet" href="css/fr_card.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -210,13 +210,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="box box-success">
 						<div class="box-header" style="border-bottom:1px solid #eee;">
 							<h3 class="box-title">使用统计</h3>
-							<div class="box-tools pull-right" data-toggle="tooltip" title="Status" style="width:300px;">
+							<div class="box-tools pull-right" data-toggle="tooltip" title="Status" style="width:350px;">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</div>
-										<input type="text" class="form-control pull-right" id="reservation">
+										<div class="row">
+											<div class="col-xs-5" style="padding-right:0;">
+												<input type="text" class="form-control pull-right" id="startTime" placeholder="请输入开始时间">
+											</div>
+											<div style="float:left;line-height:30px;"> &nbsp;-&nbsp; </div>
+											<!--<div class="col-xs-1" style="padding:0;">-</div>-->
+											<div class="col-xs-5" style="padding-left:0;">
+												<input type="text" class="form-control pull-right" id="endTime" placeholder="请输入结束时间">
+											</div>
+											
+										</div>
+										
+										
 									</div>
 									<!-- /.input group -->
 								</div>
@@ -310,13 +322,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="box box-success">
 						<div class="box-header" style="border-bottom:1px solid #eee;">
 							<h3 class="box-title">新增码统计</h3>
-							<div class="box-tools pull-right" data-toggle="tooltip" title="Status" style="width:300px;">
+							<div class="box-tools pull-right" data-toggle="tooltip" title="Status" style="width:350px;">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</div>
-										<input type="text" class="form-control pull-right" id="count">
+										<div class="row">
+											<div class="col-xs-5" style="padding-right:0;">
+												<input type="text" class="form-control pull-right" id="countStartTime" placeholder="请输入开始时间">
+											</div>
+											<div style="float:left;line-height:30px;"> &nbsp;-&nbsp; </div>
+											<!--<div class="col-xs-1" style="padding:0;">-</div>-->
+											<div class="col-xs-5" style="padding-left:0;">
+												<input type="text" class="form-control pull-right" id="conutEndTime" placeholder="请输入结束时间">
+											</div>
+											
+										</div>
 									</div>
 									<!-- /.input group -->
 								</div>
@@ -345,7 +367,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		
 		<script src="bower_components/chart.js/Chart.js"></script>
 		
@@ -419,11 +441,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			}
 
 			function codeDataDetails() {
-				var time = TimeRange("reservation")
 				var param = {
 					token: localStorage.getItem("fr_token"),
-					startTime: time.startTime,
-					endTime: time.endTime
+					startTime: $("#startTime").val(),
+					endTime: $("#endTime").val()
 				}
 				$.ajax({
 					type: "post",
@@ -449,11 +470,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			}
 
 			function newCodeDetails() {
-				var time = TimeRange("count")
 				var param = {
 					token: localStorage.getItem("fr_token"),
-					startTime: time.startTime,
-					endTime: time.endTime
+					startTime: $("#countStartTime").val(),
+					endTime: $("#conutEndTime").val()
 				}
 				$.ajax({
 					type: "post",
@@ -478,21 +498,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								labels: labels,
 								datasets: [{
 									label               : 'Digital Goods',
-					        fillColor           : 'rgba(60,141,188,0.9)',
-					        strokeColor         : 'rgba(60,141,188,0.8)',
-					        pointColor          : '#3b8bba',
-					        pointStrokeColor    : 'rgba(60,141,188,1)',
+					        		fillColor           : 'rgba(60,141,188,0.9)',
+					        		strokeColor         : 'rgba(60,141,188,0.8)',
+					       		 	pointColor          : '#3b8bba',
+					        		pointStrokeColor    : 'rgba(60,141,188,1)',
 									pointHighlightFill: '#fff',
 									pointHighlightStroke: 'rgba(220,220,220,1)',
 									data: charData
 								}]
 							}
 
-							var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-							var lineChart = new Chart(lineChartCanvas)
-							var lineChartOptions = areaChartOptions
-							lineChartOptions.datasetFill = false
-							lineChart.Line(areaChartData, lineChartOptions)
+							var lineChartCanvas = $('#lineChart').get(0).getContext('2d');
+							var lineChart = new Chart(lineChartCanvas);
+							var lineChartOptions = areaChartOptions;
+							lineChartOptions.datasetFill = false;
+							lineChart.Line(areaChartData, lineChartOptions);
 						} else {
 							alert(res.msg);
 						}
@@ -503,25 +523,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			$(function() {
 				
 				
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
-				});
-				$('#count').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
-				});
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#countStartTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#conutEndTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				
 				dataCountDetails();
 				codeDataDetails();
 				newCodeDetails();
 
-				$("#reservation").change(function() {
+				$("#startTime").change(function() {
 					codeDataDetails();
 				})
-
-				$("#count").change(function() {
+				$("#endTime").change(function() {
+					codeDataDetails();
+				})
+				
+				$("#countStartTime").change(function() {
+					newCodeDetails();
+				})
+				$("#conutEndTime").change(function() {
 					newCodeDetails();
 				})
 			})

@@ -124,8 +124,26 @@
 		<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
 		<script type="text/javascript" src="js/clipboard.min.js"></script>
 		<script type="text/javascript">
+			function getUrl(){
+				var url = location.search;
+				var json={};
+				if(url.indexOf("?") != -1){
+//					console.log(111);
+					var str = url.substr(1);
+					strs = str.split("&");
+					var arr = strs[0].split("=");
+					var keyStr=""; 
+					for(var i=0;i<arr.length;i++){
+						if(i!=0){
+							if(i!=1){keyStr += "="+arr[i];}else{keyStr += arr[i];}
+						}
+					}
+					json[arr[0]]=keyStr;
+				}
+				return json;
+			}
 			$(function(){
-				var link = "http://114.116.129.135:8083/fenrun/fenrun_h5/downloan.html?directUserCode="+GetRequest().directUserCode;
+				var link = "http://122.112.181.6:8082/fenrun/fenrun_h5/downloan.html?directUserCode="+getUrl().directUserCode;
 				$(".link").text(link)
 				$("#link").val(link)
 				

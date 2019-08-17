@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -33,7 +33,8 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
+									<span>用户id</span>
+									<input type="text" placeholder="" />
 								</div>
 								<div class="inline-block">
 									<button type="button" class="btn btn-block btn-info">搜索</button>
@@ -78,7 +79,7 @@
 		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
@@ -137,9 +138,73 @@
 						
 						{data: 'accountMoney'},
 						{data: null,render:function(data){
-							return '<button class="btn bg-green margin-r-5 save" financialId='+data.id+'>已到账</button><button class="btn bg-green margin-r-5 look" financialId='+data.id+'>作废</button>';
+							var str = "<input type='hidden' value='"+JSON.stringify(data)+"'>";
+							return str+'<button class="btn bg-green margin-r-5 save" financialId='+data.id+'>已到账</button><button class="btn bg-green margin-r-5 delete" financialId='+data.id+'>作废</button>';
 						}},
 					]
+				})
+				
+				
+				//已到账
+				$("#example").on("click",".save",function(){
+					var item = JSON.parse($(this).siblings("input").val());
+					var param = {
+						id:item.id, //充值订单id
+						userId:item.userId, //用户id
+						token: localStorage.getItem("fr_token")
+					}
+					
+					$.ajax({
+						type: "post",
+						url: url + "financial/confirmDraw",
+						async: true,
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							}else if(res.returnCode == 200) {
+								alert(res.msg);
+								table.draw(false);
+							}else{
+								alert(res.msg)
+							}
+						},
+						error:function(){
+						
+						}
+					})
+				})
+				//作废
+				$("#example").on("click",".delete",function(){
+					var item = JSON.parse($(this).siblings("input").val());
+					var param = {
+						id:item.id, //提现订单id
+						userId:item.userId, //用户id
+						token: localStorage.getItem("fr_token")
+					}
+					$.ajax({
+						type: "post",
+						url: url + "financial/invalidDraw",
+						async: true,
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							}else if(res.returnCode == 200) {
+								alert(res.msg);
+								table.draw(false);
+							}else{
+								alert(res.msg)
+							}
+						},
+						error:function(){
+						
+						}
+					})
 				})
 			})
 		</script>

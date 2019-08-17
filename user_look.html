@@ -13,7 +13,7 @@
 		<link rel="stylesheet" href="css/fr_card.css">
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -35,10 +35,10 @@
 				<section class="content">
 					<div class="box box-primary">
 						<div class="details_card">
-							<div class="box-header with-border">
-								用户信息
-							</div>
 							<div class="box-body">
+								<div class="fr_title">
+									用户信息
+								</div>
 								<div class="details_card">
 									<div class="row">
 										<div class="col-xs-3">
@@ -71,20 +71,19 @@
 										</div>-->
 										<div class="col-xs-3">
 											<div class="details_card_left">是否为领导人：</div>
-											<div class="inline-block" name="">--</div>
+											<div class="inline-block" name="isLeader">--</div>
 										</div>
 										<div class="col-xs-3">
 											<div class="details_card_left">领导人ID：</div>
-											<div class="inline-block" name="">--</div>
+											<div class="inline-block" name="leaderUserId">--</div>
 										</div>
 									</div>
 								</div>
-
-							</div>
-							<div class="box-header with-border">
-								社区信息
 							</div>
 							<div class="box-body">
+								<div class="fr_title">
+									社区信息
+								</div>
 								<div class="row">
 									<div class="col-xs-3">
 										<div class="details_card_left">社区团队：</div>
@@ -115,13 +114,15 @@
 
 								</div>
 							</div>
-							<div class="box-header with-border">
-								社区收益
-							</div>
-							<div class="card_count">
-								总计：<span name="totalOrderMoney">--</span>元
-							</div>
+							
+							
 							<div class="box-body">
+								<div class="fr_title">
+									社区收益
+								</div>
+								<div class="card_count">
+									总计：<span name="totalOrderMoney">--</span>元
+								</div>
 								<div class="row">
 									<div class="col-xs-12">
 										<table class="table table-condensed"id="income">
@@ -140,16 +141,17 @@
 								
 								
 							</div>
-
-							<div class="box-header with-border">
-								订单记录
-							</div>
-							<div class="card_count">
-								<div class="inline-block">总计：<span>--</span></div>
-								<div class="inline-block" style="margin-left:30px;">订单总额：<span>--</span></div>
-								<div class="inline-block" style="margin-left:30px;">成交订单总额：<span>--</span></div>
-							</div>
+							
+							
 							<div class="box-body">
+								<div class="fr_title">
+									订单记录
+								</div>
+								<div class="card_count">
+									<div class="inline-block">总计：<span>--</span></div>
+									<div class="inline-block" style="margin-left:30px;">订单总额：<span>--</span></div>
+									<div class="inline-block" style="margin-left:30px;">成交订单总额：<span>--</span></div>
+								</div>
 								<table class="table table-condensed" id="orderInfo">
 									<tr>
 										<th>订单号</th>
@@ -162,10 +164,11 @@
 								</table>
 							</div>
 
-							<div class="box-header with-border">
-								码池
-							</div>
+							
 							<div class="box-body">
+								<div class="fr_title">
+									码池
+								</div>
 								<table class="table table-condensed picTable"id="code">
 									<tr>
 										<th>码ID</th>
@@ -190,11 +193,12 @@
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="js/fr_func.js"></script>
 		<script src="js/nav.js"></script>
 		<script src="js/fr.js"></script>
 		<script type="text/javascript">
+			$(".treeview").eq(1).addClass("menu-open").find("ul.treeview-menu").show().find("li").addClass("active");
 			var param = {
 				token: localStorage.getItem("fr_token"),
 				id: GetRequest().id
@@ -211,7 +215,18 @@
 						ToLogin(res)
 					} else if(res.returnCode == 200) {
 						$.each(res.data.basicInfo, function(index, item) {
-							$("[name="+ index +"]").html(item);
+							if(index=="isLeader"){
+								var isLeader="";
+								(item==-1)?(isLeader="否"):(isLeader="是");
+								$("[name="+ index +"]").html(isLeader);
+							}else if(index=="leaderUserId"){
+								var leaderUserId=item;
+								(item==0)?(leaderUserId="无"):(null);
+								$("[name="+ index +"]").html(leaderUserId);
+							}else{
+								$("[name="+ index +"]").html(item);
+							}
+							
 						})
 						
 						$.each(res.data.incomeInfo,function(index,item){

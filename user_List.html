@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 
 	</head>
 
@@ -37,20 +37,29 @@
 							<div class="">
 								<div class="inline-block">
 									<span>用户ID：</span>
-									<input type="text" id="userId"/>
+									<input type="text" id="userId" />
 								</div>
 								<div class="inline-block">
 									<span>直推ID：</span>
-									<input type="text" id="directUser"/>
+									<input type="text" id="directUser" />
+								</div>
+								<div class="inline-block">	
+									<select id="status" />
+									<option value="">全部状态</option>
+									<option value="-2">激活审核中</option>
+									<option value="-1">封号</option>
+									<option value="1">未激活</option>
+									<option value="2">已激活</option>
+
+									</select>
 								</div>
 								<div class="inline-block">
-									<span>状态：</span>
-									<input type="text" id="status"/>
-								</div>
-								<div class="inline-block">
-									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="reservation" />
-								</div>
+	<span>注册时间：</span>
+	<input type="text" class="form-control time" id="startTime" />
+	-
+	<input type="text" class="form-control time" id="endTime" />
+</div>
+
 								<div class="inline-block">
 									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
 								</div>
@@ -96,8 +105,30 @@
 						</div>
 						<!-- /.box-body -->
 					</div>
-					
+
 				</section>
+			</div>
+		</div>
+		<div class="modal fade" id="ToDelete">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">封号确认</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form">
+							<div class="box-body">
+								<div class="form-group">
+									<p id="model-phone">是否对用户“<span class="showUserId"></span>”进行封号操作</p>
+									<input type="hidden" id="deleteId"/>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="delete">确认</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -107,102 +138,149 @@
 		<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 		<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-
-
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="js/nav.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/fr_func.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				
+
 				var table = $('#example').DataTable({
-				'ordering': false,
-				'lengthChange': false,
-				'searching': false,
-				'info': true,
-				"processing": true,
-				"serverSide": true,
-				"ajax" : {
-					"type" : 'post',
-					"url" : url+'/user/userList',
-					"contentType": "application/json",
-					"data" : function(d){
-						var data = {
-							curPage:d.start/10+1,
-							pageSize:d.length,
-							startTime:TimeRange("reservation").startTime,
-							endTime:TimeRange("reservation").endTime,
-							status:$('#status').val(),
-							directUser:$('#directUser').val(),
-							id:$('#userId').val(),
-							token:localStorage.getItem('fr_token'),
+					'ordering': false,
+					'lengthChange': false,
+					'searching': false,
+					'info': true,
+					"processing": true,
+					"serverSide": true,
+					"ajax": {
+						"type": 'post',
+						"url": url + '/user/userList',
+						"contentType": "application/json",
+						"data": function(d) {
+							var data = {
+								curPage: d.start / 10 + 1,
+								pageSize: d.length,
+								startTime:$("#startTime").val(),
+								endTime:$("#endTime").val(),
+								status: $('#status').val(),
+								directUser: $('#directUser').val(),
+								id: $('#userId').val(),
+								token: localStorage.getItem('fr_token'),
+							}
+							return JSON.stringify(data)
+						},
+						"dataFilter": function(data) {
+							var datajson = eval('(' + data + ')')
+							//						reLogin(datajson.returnCode)
+							if(datajson.returnCode == 501) {
+								ToLogin(datajson)
+							} else if(datajson.returnCode == 500) {
+								alert(datajson.msg)
+								return false;
+							}
+							var json = {}
+							json.recordsTotal = datajson.data.totalCount;
+							json.recordsFiltered = datajson.data.totalCount;
+							json.data = datajson.data.data;
+							return JSON.stringify(json);
 						}
-						return JSON.stringify(data)
 					},
-					"dataFilter":function(data){
-						var datajson = eval('('+data+')')
-//						reLogin(datajson.returnCode)
-						if(datajson.returnCode == 501){
-							ToLogin(datajson)
-						}else if(datajson.returnCode == 500){
-							alert(datajson.msg)
-							return false;
+					"columns": [{
+							data: 'id',
+						},
+						{
+							data: 'directUser'
+						},
+						{
+							data: 'teamUserCount'
+						},
+						{
+							data: 'phone'
+						},
+						{
+							data: 'creditBalance'
+						},
+						{
+							data: 'totalOrderMoney'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return userStatus(data.status);
+							}
+						},
+						{
+							data: 'time'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return '<button class="btn bg-green margin-r-5 look" userId=' + data.id + '>查看</button><button class="btn bg-green margin-r-5 close_user" userId=' + data.id + '>封号</button>'
+							}
 						}
-						var json = {}
-						json.recordsTotal = datajson.data.totalCount;
-						json.recordsFiltered = datajson.data.totalCount;
-						json.data = datajson.data.data;
-						return JSON.stringify(json);
-					}
-				},
-				"columns":[
-					{data:'id',},
-					{data:'directUser'},
-					{data:'teamUserCount'},
-					{data:'phone'},
-					{data:'creditBalance'},
-					{data:'totalOrderMoney'},
-					{data:null,render:function(data){
-						return userStatus(data.status);
-					}},
-					{data:'time'},
-					{data:null,render:function(data){return '<button class="btn bg-green margin-r-5 look" userId='+data.id+'>查看</button><button class="btn bg-green margin-r-5 close_user" userId='+data.id+'>封号</button>'}}
-					
-				]
-			})
-				
-				$("#search").click(function(){
+
+					]
+				})
+
+				$("#search").click(function() {
 					console.log(111);
 					table.ajax.reload()
 				})
-//				$('#example2').DataTable({
-//					'paging': true,
-//					'lengthChange': false,
-//					'searching': false,
-//					'ordering': true,
-//					'info': true,
-//					'autoWidth': false
-//				})
+				//				$('#example2').DataTable({
+				//					'paging': true,
+				//					'lengthChange': false,
+				//					'searching': false,
+				//					'ordering': true,
+				//					'info': true,
+				//					'autoWidth': false
+				//				})
 
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
 				})
-				
-				
-				$("#example").on("click",".look",function(){
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+
+				$("#example").on("click", ".look", function() {
 					console.log(111);
 					console.log($(this).attr("userid"));
-					window.location.href = "user_look.html?id="+$(this).attr("userid");
+					window.location.href = "user_look.html?id=" + $(this).attr("userid");
 				})
-				
-				$("#example").on("click",".close_user",function(){
-					table.draw(false)
+
+				$("#example").on("click", ".close_user", function() {
+					$("#deleteId").val($(this).attr("userid"));
+					$(".showUserId").text($(this).attr("userid"))
+					$("#ToDelete").modal("show");
+				})
+
+				$("#delete").click(function() {
+					$.ajax({
+						type: "post",
+						url: url + "/user/banUser",
+						async: true,
+						data: JSON.stringify({
+							id: $("#deleteId").val(),
+							token:localStorage.getItem('fr_token'),
+						}),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								table.draw(false);
+								$("#ToDelete").modal("hide");
+							} else {
+								
+							}
+						}
+					})
 				})
 			})
 		</script>

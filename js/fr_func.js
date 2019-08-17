@@ -54,15 +54,27 @@ function TimeRange(id) {
 function userStatus(status) {
 	var str = "";
 	if(status == -1) {
-		str = '<a href=""><div class="fr_status fr_danger">封号</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_danger">封号</div></a>';
+	} else if(status == -2) {
+		str = '<a href="javascript:;"><div class="fr_status fr_default">激活审核中</div></a>';
 	} else if(status == 1) {
-		str = '<a href=""><div class="fr_status fr_default">未激活</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_default">未激活</div></a>';
 	} else if(status == 2) {
-		str = '<a href=""><div class="fr_status fr_success">已激活</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_success">已激活</div></a>';
 	}
 	return str;
 }
 
+function codeStatus(status) {
+	var str = "";
+	if(status == -1) {
+		str = '<a href="javascript:;"><div class="fr_status fr_danger">已风控</div></a>';
+	} else if(status == 1) {
+		str = '<a href="javascript:;"><div class="fr_status fr_info">正常</div></a>';
+	}
+	return str;
+}
+//status
 function codeType(type) {
 	var str = "";
 	if(type == 1) {
@@ -80,11 +92,11 @@ function codeType(type) {
 function orderStatus(status) {
 	var str = "";
 	if(status == 1) {
-		str = '<a href=""><div class="fr_status fr_info">进行中</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_info">进行中</div></a>';
 	} else if(status == 2) {
-		str = '<a href=""><div class="fr_status fr_success">成功</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_success">成功</div></a>';
 	} else if(status == -1) {
-		str = '<a href=""><div class="fr_status fr_default">失败</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_default">失败</div></a>';
 	}
 	return str;
 }
@@ -92,11 +104,11 @@ function orderStatus(status) {
 function Income(status) {
 	var str = "";
 	if(status == 1) {
-		str = '<a href=""><div class="fr_status fr_info">待确认收款</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_info">待确认收款</div></a>';
 	} else if(status == 2) {
-		str = '<a href=""><div class="fr_status fr_success">已完成</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_success">已完成</div></a>';
 	} else if(status == -1) {
-		str = '<a href=""><div class="fr_status fr_default">已失效</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_default">已失效</div></a>';
 	}
 	return str;
 }
@@ -145,12 +157,21 @@ function financialMoney(num) {
 function financialType(status) {
 	var str = "";
 	if(status == 1) {
-		str = '<a href=""><div class="fr_status fr_info">正在收款</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_info">正在收款</div></a>';
 	} else if(status == 2) {
-		str = '<a href=""><div class="fr_status fr_success">停止收款</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_success">停止收款</div></a>';
 	} else if(status == -1) {
-		str = '<a href=""><div class="fr_status fr_default">作废</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_default">作废</div></a>';
 	}
 	return str;
 }
 
+function count(num1,num2){
+	var a;
+	if(num1!=0){
+		a = num1/num2;
+	}else{
+		a = 0;
+	}
+	return a.toFixed(2)*100+"%";
+}

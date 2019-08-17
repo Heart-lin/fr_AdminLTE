@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -18,7 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -38,13 +34,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<div class="">
 								<div class="inline-block">
 									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="reservation" />
+									<input type="text" class="form-control time" id="startTime" />
+									-
+									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
+									<select name="">
+										<option value="">选择类型</option>
+										<option value="1">激活</option>
+										<option value="2">充值</option>
+										<option value="3">提现</option>
+										<option value="4">收益</option>
+									</select>
 								</div>
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info">搜索</button>
+									<input type="text" placeholder="" />
+								</div>
+								<div class="inline-block">
+									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -123,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		
 		
 		<script src="js/fr_func.js"></script>
@@ -131,6 +138,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				
+				
 				var table = $('#example').DataTable({
 					'ordering': false,
 					'lengthChange': false,
@@ -144,8 +161,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						"contentType": "application/json",
 						"data": function(d) {
 							var data = {
-								startTime: TimeRange("reservation").startTime,
-								endTime: TimeRange("reservation").endTime,
+								startTime:$("#startTime").val(),
+								endTime:$("#endTime").val(),
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
 								userId: $('#userId').val(),
@@ -189,11 +206,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						{data: "accountMoney"}
 					]
 				})
-
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
+				
+				$("#search").click(function(){
+					table.ajax.reload();
 				})
 			})
 		</script>

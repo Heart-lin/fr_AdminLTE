@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -155,7 +155,7 @@
 		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
@@ -215,11 +215,14 @@
 					]
 				})
 
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
-				})
+				$('#start_time').datepicker({
+	autoclose: true,
+	format: "YYYY-MM-DD"
+})
+$('#end_time').datepicker({
+	autoclose: true,
+	format: "YYYY-MM-DD"
+})
 			})
 		</script>
 	</body>

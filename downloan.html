@@ -125,19 +125,63 @@
 					</div>
 				</div>
 			</form>
-			<button type="button" class="btn btn-default btn-block" id="login">立即下载</button>
+			<button type="button" class="btn btn-default btn-block" id="login">立即注册</button>
+			<a href="javascript:;" id="ToDownload" style="display:inline-block;color:#999;margin:15px 0;">我已注册立即下载</a>
 		</div>
 		<script type="text/javascript" src="js/fr.js"></script>
 		<script type="text/javascript" src="js/fr_func.js"></script>
 		<script type="text/javascript">
-			
-			$(function(){
-				
-				if(GetRequest().directUserCode){
-					console.log(GetRequest().directUserCode);
-					$("#directUserCode").val(GetRequest().directUserCode);
+			function phoneSystem() {
+				var phone = ""
+				var u = navigator.userAgent,
+					app = navigator.appVersion;
+				console.log(u);
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+				var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				if(isAndroid) {
+					console.log(111);
+					//这个是安卓操作系统
+					phone = "Android";
+				}
+				if(isIOS) {
+					console.log(222);　　　　 //这个是ios操作系统
+					phone = "IOS";
+				}
+				return phone;
+			}
+
+			function getUrl() {
+				var url = location.search;
+				var json = {};
+				if(url.indexOf("?") != -1) {
+					//					console.log(111);
+					var str = url.substr(1);
+					strs = str.split("&");
+					var arr = strs[0].split("=");
+					var keyStr = "";
+					for(var i = 0; i < arr.length; i++) {
+						if(i != 0) {
+							if(i != 1) {
+								keyStr += "=" + arr[i];
+							} else {
+								keyStr += arr[i];
+							}
+						}
+					}
+					json[arr[0]] = keyStr;
+				}
+				return json;
+			}
+			$(function() {
+				var IOSdownloan = "https://www.pgyer.com/7LiV";
+				var AndroidDownloan = "https://fir.im/j67p";
+
+				console.log(phoneSystem())
+				if(getUrl().directUserCode) {
+					console.log(getUrl().directUserCode);
+					$("#directUserCode").val(getUrl().directUserCode);
 				};
-				
+
 				var btn = $("#getCode");
 				var wait = 60;
 				var isPress = false;
@@ -164,7 +208,9 @@
 							type: "POST",
 							url: url + "/app/user/getSmsCode",
 							async: false,
-							data: JSON.stringify({phone: $("#phone").val()}),
+							data: JSON.stringify({
+								phone: $("#phone").val()
+							}),
 							contentType: "application/json",
 							dataType: "json",
 							success: function(res) {
@@ -179,37 +225,46 @@
 						});
 					}
 				});
-			})
 
-			
-			$("#login").click(function() {
-				var param = {
-					phone: $("#phone").val(), //手机号
-					password: $("#password").val(), //登录密码
-					smsCode: $("#smsCode").val(), //短信验证码
-					directUserCode: $("#directUserCode").val() //邀请码密文
-				}
-				console.log(param);
-				//					return false;
-				$.ajax({
-					type: "post",
-					url: url + "/app/user/register",
-					//  					async:"true",
-					data: JSON.stringify(param),
-					contentType: "application/json",
-					dataType: "json",
-					success: function(res) {
-						if(res.returnCode == 501) {
-							ToLogin(res)
-						} else if(res.returnCode == 200) {
-							alert("添加成功");
-						} else {
-							alert(res.msg)
-						}
+				$("#login").click(function() {
+					var param = {
+						phone: $("#phone").val(), //手机号
+						password: $("#Password").val(), //登录密码
+						smsCode: $("#smsCode").val(), //短信验证码
+						directUserCode: $("#directUserCode").val() //邀请码密文
 					}
+					console.log(param);
+					//					return false;
+					$.ajax({
+						type: "post",
+						url: url + "/app/user/register",
+						//  					async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 200) {
+								if(phoneSystem() == "IOS") {
+									window.location.href = IOSdownloan;
+								} else {
+									window.location.href = AndroidDownloan;
+								}
+
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
 				})
 
-				//				/app/user/register
+				$("#ToDownload").click(function() {
+					if(phoneSystem() == "IOS") {
+						window.location.href = IOSdownloan;
+					} else {
+						window.location.href = AndroidDownloan;
+					}
+
+				})
 			})
 		</script>
 	</body>

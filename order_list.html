@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -34,13 +34,33 @@
 							<div class="">
 								<div class="inline-block">
 									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="reservation" />
+									<input type="text" class="form-control time" id="startTime" />
+									-
+									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
+									<span>用户id：</span>
+									<input type="text"  id="userId" />
 								</div>
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info">搜索</button>
+									<select id="status">
+										<option value="">全部状态</option>
+										<option value="1">进行中</option>
+										<option value="2">成功</option>
+										<option value="-1">失败</option>
+									</select>
+								</div>
+								<div class="inline-block">
+									<select id="receiveType">
+										<option value="">全部码</option>
+										<option value="1">支付宝</option>
+										<option value="2">微信</option>
+										<option value="3">银行卡</option>
+										<option value="4">商户码</option>
+									</select>
+								</div>
+								<div class="inline-block">
+									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -87,7 +107,7 @@
 													<span>支付成功订单总额</span>
 												</div>
 												<div class="card_content">
-													<span name="totalOverOrderMoney">没数据</span>
+													<span name="totalOverOrderMoney"></span>
 												</div>
 											</li>
 										</ul>
@@ -129,12 +149,22 @@
 		<!--<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
-		<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		
+		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+		
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: 'yyyy-mm-dd',
+				})
 				var table = $('#example').DataTable({
 					'ordering': false,
 					'lengthChange': false,
@@ -150,8 +180,8 @@
 							var data = {
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
-								startTime: TimeRange("reservation").startTime,
-								endTime: TimeRange("reservation").endTime,
+								startTime:$("#startTime").val(),
+								endTime:$("#endTime").val(),
 								status: $('#status').val(),
 								receiveType:$('#receiveType').val(),
 								userId: $('#userId').val(),
@@ -172,10 +202,15 @@
 							$("[name= orderCount]").text(datajson.data.orderData.count);
 							$("[name= orderMoney]").text(datajson.data.orderData.money);
 							
-							$("[name=overOrderCount ]").text(datajson.data.overOrderData.count);
+							$("[name=overOrderCount]").text(datajson.data.overOrderData.count);
 							
-							$("[name=overRate ").text(datajson.data.overRate);
-
+//							$("[name=overRate ").text(datajson.data.overRate);
+							$("[name='totalOverOrderMoney']").text(datajson.data.overOrderData.money)
+							
+							if(datajson.data.orderData.count&&datajson.data.overOrderData.count){
+								$("[name=overRate]").text(count(datajson.data.overOrderData.count,datajson.data.orderData.count))
+							}
+							
 							var json = {};
 							json.recordsTotal = datajson.data.totalCount;
 							json.recordsFiltered = datajson.data.totalCount;
@@ -196,7 +231,7 @@
 						{
 							data: null,
 							render:function(data){
-								return codeType(data.codeType)
+								return codeType(data.receiveType)
 							}
 						},
 						{
@@ -232,10 +267,8 @@
 					window.location.href = "order_details.html?id="+$(this).attr("orderid");
 				})
 				
-				$('#reservation').daterangepicker({
-					locale: {
-						format: "YYYY-MM-DD"
-					}
+				$("#search").click(function(){
+					table.ajax.reload();
 				})
 			})
 		</script>
