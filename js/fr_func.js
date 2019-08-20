@@ -40,6 +40,14 @@ function ToLogin(res) {
 	return false;
 }
 
+function alertMsg() {
+
+	var opacity = 1;
+	setInterval(function() {
+		$("#alert").css("opacity", opacity);
+	}, 1000)
+}
+
 function TimeRange(id) {
 	var time = $("#" + id).val();
 	var startTime = time.substring(0, 10);
@@ -129,7 +137,7 @@ function level(level) {
 	return str;
 }
 
-function financialType(type) {
+function financial_account_Type(type) {
 	var str = "";
 	if(type == 1) {
 		str = '激活';
@@ -140,7 +148,6 @@ function financialType(type) {
 	} else if(type == 4) {
 		str = '收益';
 	}
-	console.log()
 	return str;
 }
 
@@ -166,12 +173,28 @@ function financialType(status) {
 	return str;
 }
 
-function count(num1,num2){
+function count(num1, num2) {
 	var a;
-	if(num1!=0){
-		a = num1/num2;
-	}else{
+	if(num1 != 0) {
+		a = num1 / num2;
+	} else {
 		a = 0;
 	}
-	return a.toFixed(2)*100+"%";
+	return a.toFixed(2) * 100 + "%";
+}
+
+function getPic() {
+	$.ajax({
+		type: "post",
+		url: url + "app/user/getQiniuUrl",
+		async: false,
+		contentType: "application/json",
+		dataType: 'json',
+		success: function(res) {
+			if(res.returnCode == 200) {
+				var str = '<input type="hiddem" id="picUrl" value="'+res.data+'"/>';
+				$("body").append(str);
+			} 
+		}
+	})
 }

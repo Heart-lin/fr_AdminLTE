@@ -193,7 +193,13 @@
 							$.each(datajson.data,function(index,item){
 								$(" [name="+index+"]").text(item);
 							})
-							$("[name=totalMoney]").html(datajson.data.totalMoney.money)
+							if(datajson.data.totalMoney){
+								$("[name=totalMoney]").html(datajson.data.totalMoney.money)
+							}else{
+								$("[name=totalMoney]").html(0)
+							}
+							
+							
 							var json = {};
 							json.recordsTotal = datajson.data.totalCount;
 							json.recordsFiltered = datajson.data.totalCount;

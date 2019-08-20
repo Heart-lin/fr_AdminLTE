@@ -37,106 +37,222 @@
 							<ul class="fr_tab clearfix">
 								<li class="active">版本设置</li>
 								<li>客服设置</li>
+								<li>公告列表</li>
+
 							</ul>
 						</div>
 						<div class="box-body">
-							
-								<div class="fr_tab_body fr_tab_body_active">
-									<button type="button" class="btn  margin btn-info" data-toggle="modal" data-target="#addVersion"><i class="fa fa-fw fa-plus"></i>新增</button>
-									<table id="example" class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th>版本号</th>
-												<th>版本说明</th>
-												<th>应用平台</th>
-											</tr>
-										</thead>
-										<tbody></tbody>
-									</table>
-								</div>
-								<div class="fr_tab_body ">
-										<div class="col-md-6">
-											<form role="form">
-												<div class="box-body">
-													<div class="form-group">
-														<label for="exampleInputEmail1">微信联系客服</label>
-														<input type="text" class="form-control" id="serviceWx" placeholder="">
-													</div>
-													<div class="form-group">
-														<label for="exampleInputPassword1">QQ联系客服</label>
-														<input type="text" class="form-control" id="serviceQq" >
-													</div>
-													<div class="form-group">
-														<label for="exampleInputPassword1">电话联系客服</label>
-														<input type="text" class="form-control" id="servicePhone">
-													</div>
-													<button type="button" class="btn  margin btn-info" id='updateServiceInfo'>保存</button>
-												</div>
-												<div style="height:10px;"></div>
-											</form>
+
+							<div class="fr_tab_body fr_tab_body_active">
+								<button type="button" class="btn  margin btn-info" data-toggle="modal" data-target="#addVersion"><i class="fa fa-fw fa-plus"></i>新增</button>
+								<table id="example" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>版本号</th>
+											<th>版本说明</th>
+											<th>应用平台</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+							<div class="fr_tab_body ">
+								<div class="col-md-6">
+									<form role="form">
+										<div class="box-body">
+											<div class="form-group">
+												<label for="exampleInputEmail1">微信联系客服</label>
+												<input type="text" class="form-control" id="serviceWx" placeholder="">
+											</div>
+											<div class="form-group">
+												<label for="exampleInputPassword1">QQ联系客服</label>
+												<input type="text" class="form-control" id="serviceQq">
+											</div>
+											<div class="form-group">
+												<label for="exampleInputPassword1">电话联系客服</label>
+												<input type="text" class="form-control" id="servicePhone">
+											</div>
+											<button type="button" class="btn  margin btn-info" id='updateServiceInfo'>保存</button>
 										</div>
-									</div>
+										<div style="height:10px;"></div>
+									</form>
 								</div>
+							</div>
+							<div class="fr_tab_body">
+								<button type="button" class="btn  margin btn-info" id="addProclamation"><i class="fa fa-fw fa-plus"></i>新增</button>
+								<table id="Proclamation" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>序号</th>
+											<th>内容</th>
+											<th>链接</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
 							</div>
 						</div>
 					</div>
-				</section>
-				<div class="modal fade in" id="addVersion">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-								<h4 class="modal-title">添加版本</h4>
+			</div>
+		</div>
+		</section>
+		<div class="modal fade in" id="addVersion">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  				<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">添加版本</h4>
 
-							</div>
-							<div class="modal-body">
-								<form class="form-horizontal">
-									<div class="box-body">
-										<div class="form-group">
-											<label for="version" class="col-sm-2 control-label">版本号</label>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="version" class="col-sm-2 control-label">版本号</label>
 
-											<div class="col-sm-10">
-												<input type="email" class="form-control" id="version">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="intro" class="col-sm-2 control-label">版本说明</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" id="version">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="intro" class="col-sm-2 control-label">版本说明</label>
 
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="intro">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label">应用平台</label>
-											<div class="col-sm-10 radiosw">
-												<label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="intro">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">应用平台</label>
+									<div class="col-sm-10 radiosw">
+										<label>
 								                  	<input type="radio" name="r3" class="flat-red" value="1" checked>  ios
 								                </label>
-												<label>
+										<label>
 								                  	<input type="radio" name="r3" value="2" class="flat-red">  安卓
 								                </label>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="link" class="col-sm-2 control-label">下载链接</label>
-
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="link">
-											</div>
-										</div>
 									</div>
-								</form>
-							</div>
+								</div>
+								<div class="form-group">
+									<label for="link" class="col-sm-2 control-label">下载链接</label>
 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" id="versionSave">确认</button>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="link">
+									</div>
+								</div>
 							</div>
-						</div>
+						</form>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="save">确认</button>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade in" id="addProclamationModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  				<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">添加公告</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="account" class="col-sm-3 control-label">内容</label>
+
+									<div class="col-sm-9">
+										<textarea name="title" style="width:100%;padding:10px;"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="account" class="col-sm-3 control-label">url</label>
+
+									<div class="col-sm-9">
+										<input name="url" style="width:100%;padding:10px;">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary save">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade in" id="updateProclamation">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  				<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">修改公告</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="account" class="col-sm-3 control-label">内容</label>
+
+									<div class="col-sm-9">
+										<!--判断添加与修改，1：修改 2：添加-->
+										<input type="hidden" name="addOrUpdate" />
+
+										<input type="hidden" name="id" />
+										<textarea name="title" style="width:100%;padding:10px;"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="account" class="col-sm-3 control-label">url</label>
+
+									<div class="col-sm-9">
+										<input type="hidden" name="id" />
+										<input name="url" style="width:100%;padding:10px;">
+									</div>
+									<!--<div class="col-sm-9">
+										<input type="hidden" name="id" />
+										<textarea name="url" style="width:100%;padding:10px;"></textarea>
+									</div>-->
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary save">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade in" id="deleteProclamationModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  				<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">删除公告</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="box-body">
+								<input type="hidden" name="id" />
+								<p>是否删除序号为“<span name="id"></span>”的公告</p>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary save">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="dist/js/adminlte.min.js"></script>
@@ -154,47 +270,37 @@
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
-			function serviceInfo(){
-					var param = {
-						token: localStorage.getItem('fr_token'),
-					}
-					$.ajax({
-						type: "post",
-						url: url + "/system/serviceInfo",
-						//  		async:"true",
-						data: JSON.stringify(param),
-						contentType: "application/json",
-						dataType: "json",
-						success: function(res) {
-							if(res.returnCode == 501) {
-								ToLogin(res)
-							} else if(res.returnCode == 200) {
-								$.each(res.data,function(index,item){
-									$("#"+index).val(item);
-								})
-							} else {
-								alert(res.msg)
-							}
-						}
-					})
+			function serviceInfo() {
+				var param = {
+					token: localStorage.getItem('fr_token'),
 				}
+				$.ajax({
+					type: "post",
+					url: url + "/system/serviceInfo",
+					//  		async:"true",
+					data: JSON.stringify(param),
+					contentType: "application/json",
+					dataType: "json",
+					success: function(res) {
+						if(res.returnCode == 501) {
+							ToLogin(res)
+						} else if(res.returnCode == 200) {
+							$.each(res.data, function(index, item) {
+								$("#" + index).val(item);
+							})
+						} else {
+							alert(res.msg)
+						}
+					}
+				})
+			}
 			$(function() {
-				
+				//联系方式显示
 				serviceInfo();
-				
+
 				$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
 					checkboxClass: 'icheckbox_flat-green',
 					radioClass: 'iradio_flat-green'
-				})
-
-				$(".fr_tab li").click(function() {
-					console.log(111);
-					if(!$(this).hasClass("active")) {
-						console.log(222);
-						$(this).addClass("active").siblings().removeClass("active")
-
-						$(".fr_tab_body").eq($(this).index()).addClass("fr_tab_body_active").siblings(".fr_tab_body").removeClass("fr_tab_body_active");
-					}
 				})
 
 				var table = $('#example').DataTable({
@@ -253,10 +359,82 @@
 
 					]
 				})
-				
-				
-				
-				$("#versionSave").click(function() {
+
+				//公告
+				function ProclamationFun() {
+					var Proclamation = $('#Proclamation').DataTable({
+						'ordering': false,
+						'lengthChange': false,
+						'searching': false,
+						'info': true,
+						"processing": true,
+						"serverSide": true,
+						"ajax": {
+							"type": 'post',
+							"url": url + '/system/appProclamationList',
+							"contentType": "application/json",
+							"data": function(d) {
+								var data = {
+									curPage: d.start / 10 + 1,
+									pageSize: d.length,
+									token: localStorage.getItem('fr_token'),
+								}
+								return JSON.stringify(data)
+							},
+							"dataFilter": function(data) {
+								var datajson = eval('(' + data + ')')
+								//						reLogin(datajson.returnCode)
+								if(datajson.returnCode == 501) {
+									ToLogin(datajson)
+								} else if(datajson.returnCode == 500) {
+									alert(datajson.msg)
+									return false;
+								}
+								var json = {};
+								json.recordsTotal = datajson.data.totalCount;
+								json.recordsFiltered = datajson.data.totalCount;
+								json.data = datajson.data.data;
+								return JSON.stringify(json);
+							}
+						},
+						"columns": [{
+								data: 'id'
+							},
+							{
+								data: 'title'
+							},
+							{
+								data: 'url'
+							},
+							{
+								data: null,
+								render: function(data) {
+									console.log(data.id);
+									return "<input type='hidden' value='" + JSON.stringify(data) + "'><button class='btn bg-green margin-r-5 updateProclamation'>修改</button><button class='btn bg-green margin-r-5 deleteProclamation'>删除</button>";
+								}
+							}
+
+						]
+					})
+
+					return Proclamation;
+				}
+				var Proclamation;
+				$(".fr_tab li").click(function() {
+					if(!$(this).hasClass("active")) {
+						$(this).addClass("active").siblings().removeClass("active")
+
+						$(".fr_tab_body").eq($(this).index()).addClass("fr_tab_body_active").siblings(".fr_tab_body").removeClass("fr_tab_body_active");
+						if($(this).index() == 2) {
+							if(!Proclamation) {
+								Proclamation = ProclamationFun();
+							}
+						}
+
+					}
+				})
+
+				$("#addVersion .save").click(function() {
 					var param = {
 						token: localStorage.getItem('fr_token'),
 						platform: $(".radiosw div.checked").find("input").val(), //平台 1-ios 2-安卓
@@ -285,13 +463,13 @@
 						}
 					})
 				})
-				
-				$("#updateServiceInfo").click(function(){
+
+				$("#updateServiceInfo").click(function() {
 					var param = {
 						token: localStorage.getItem('fr_token'),
 						servicePhone: $("#servicePhone").val(),
 						serviceQq: $("#serviceQq").val(),
-						serviceWx: $("#serviceWx").val(), 
+						serviceWx: $("#serviceWx").val(),
 					}
 					$.ajax({
 						type: "post",
@@ -305,6 +483,114 @@
 								ToLogin(res)
 							} else if(res.returnCode == 200) {
 								alert("添加成功");
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				})
+
+				$("#Proclamation").on("click", ".updateProclamation", function() {
+					var item = JSON.parse($(this).siblings("input").val());
+					$("#updateProclamation [name=id]").val(item.id);
+					$("#updateProclamation [name=title]").val(item.title);
+					$("#updateProclamation [name=url]").val(item.url);
+					$("#updateProclamation").modal("show");
+				})
+
+				$("#Proclamation").on("click", ".deleteProclamation", function() {
+					var item = JSON.parse($(this).siblings("input").val());
+					$("#updateProclamation [name=id]").val(item.id);
+					$("#deleteProclamation").modal("show");
+				})
+
+				$("#updateProclamation .save").click(function() {
+					var param = {
+						token: localStorage.getItem('fr_token'),
+						id: $("#updateProclamation [name=id]").val(), //公告id
+						url: $("#updateProclamation [name=url]").val(), //页面地址
+						title: $("#updateProclamation [name=title]").val(), //标题
+						status: 1 //-1关闭 1开启
+					}
+					$.ajax({
+						type: "post",
+						url: url + "system/updateAppProclamation",
+						//  		async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert(res.msg)
+								$("#updateProclamation").modal("hide");
+								Proclamation.draw(false);
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				})
+
+				$("#addProclamation").click(function() {
+					$("#addProclamationModal").modal("show");
+					$("#addProclamationModal").find("input").val("");
+					$("#addProclamationModal").find("textarea").val("");
+				})
+
+				$("#addProclamationModal .save").click(function() {
+					var param = {
+						token: localStorage.getItem('fr_token'),
+						url: $("#addProclamationModal [name=url]").val(), //页面地址
+						title: $("#addProclamationModal [name=title]").val(), //标题
+						status: 1 //-1关闭 1开启
+					}
+					$.ajax({
+						type: "post",
+						url: url + "system/addAppProclamation",
+						//  		async:"true",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert(res.msg)
+								$("#addProclamationModal").modal("hide");
+								Proclamation.draw(false);
+							} else {
+								alert(res.msg)
+							}
+						}
+					})
+				})
+				// 删除
+				$("#Proclamation").on("click", ".deleteProclamation", function() {
+					var item = JSON.parse($(this).siblings("input").val());
+					$("#deleteProclamationModal [name=id]").val(item.id);
+					$("#deleteProclamationModal span[name=id]").text(item.id);
+					$("#deleteProclamationModal").modal("show");
+				})
+				
+				$("#deleteProclamationModal .save").click(function(){
+					var param = {
+						token: localStorage.getItem('fr_token'),
+						id:$("#deleteProclamationModal [name=id]").val(),
+					}
+					$.ajax({
+						type: "post",
+						url: url + "system/delAppProclamation",
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								$("#deleteProclamationModal").modal("hide");
+								Proclamation.draw(false);
 							} else {
 								alert(res.msg)
 							}

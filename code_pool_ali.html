@@ -145,8 +145,8 @@
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			getPic();
 			$(function() {
-				
 				$('#startTime').datepicker({
 					autoclose: true,
 					format: 'yyyy-mm-dd',
@@ -205,7 +205,9 @@
 				"columns":[
 					{data:'id'},
 					{data:'phone'},
-					{data:'codeUrl'},
+					{data:null,render:function(data){
+						return '<img src="'+$("#picUrl").val()+data.codeUrl+'" style="width:100px;">'
+					}},
 					{data:'account'},
 					{data:'udid'},
 					{data:'time'},

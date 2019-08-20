@@ -195,6 +195,9 @@
 .details_card .table.picTable>tbody>tr>td{
 	vertical-align: middle;
 }
+.details_card .table.picTable img{
+	width:100px;
+}
 .details_card .table tr>th{
 	color:#333;
 	font-weight: normal;

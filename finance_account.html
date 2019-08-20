@@ -143,17 +143,55 @@
 						{data: 'money'},
 						
 						{data: null,render:function(data){
-							return financialType(data.status);
+							return financialType(data.state);
 						}},
 						{data: null,render:function(data){
 							var active = "",open="关闭";
-							if(data.state == 1){
+							if(data.status == 1){
 								active="active";
 								open="开启"
 							}
-							return '<div class="fr_swich '+ active +'"><div class="fr_swich_body"></div><span class="fr_swich_txt">'+ open +'</span></div>';
+							return '<div class="fr_swich '+ active +'" fr_id = "'+ data.id +'"><div class="fr_swich_body"></div><span class="fr_swich_txt">'+ open +'</span></div>';
 						}},
 					]
+				})
+				
+				$("#example").on("click",".fr_swich",function(){
+					var id= $(this).attr("fr_id");
+					var _this =$(this);
+					var status;
+					if($(this).hasClass("active")){
+						status = "-1";
+					}else{
+						status = "1"; 
+					}
+					$.ajax({
+						type: "post",
+						url: url + "financial/updateReceiveAccountStatus",
+						async: true,
+						contentType: "application/json",
+						dataType: 'json',
+						data: JSON.stringify({
+							token: localStorage.getItem('fr_token'),
+							id:id,
+							status:status,
+						}),
+						success:function(res){
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								if($(_this).hasClass("active")){
+									$(_this).removeClass("active");
+									
+								}else{
+									$(_this).addClass("active");
+									$(_this).find(".fr_swich_txt").text("开启");
+								}
+							}else{
+								alert(res.msg);
+							}
+						}
+					})
 				})
 			})
 		</script>

@@ -198,7 +198,14 @@
 							data: 'name'
 						},
 						{
-							data: 'roleDetails'
+							data: null,
+							render: function(data) {
+								if(data.name=="超级管理员"){
+									return "拥有全部权限";
+								}else{
+									return data.roleDetails
+								}
+							}
 						},
 						{
 							data: null,
@@ -223,28 +230,28 @@
 				
 				$("#modal-delete").click(function(){
 					$.ajax({
-					type: "post",
-					url: url + "system/delRole",
-					async: true,
-					contentType: "application/json",
-					dataType: 'json',
-					data: JSON.stringify({
-						token: localStorage.getItem('fr_token'),
-						id:$("#powerId").val(),
-						addManager:localStorage.getItem("fr_managerId")
-					}),
-					success:function(res){
-						if(res.returnCode == 501) {
-							ToLogin(res)
-						} else if(res.returnCode == 200) {
-							alert("删除成功!");
-							$("#modal-delete").modal("hide");
-							table.draw(false);
-						}else{
-							alert(res.msg);
+						type: "post",
+						url: url + "system/delRole",
+						async: true,
+						contentType: "application/json",
+						dataType: 'json',
+						data: JSON.stringify({
+							token: localStorage.getItem('fr_token'),
+							id:$("#powerId").val(),
+							addManager:localStorage.getItem("fr_managerId")
+						}),
+						success:function(res){
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert("删除成功!");
+								$("#modal-delete").modal("hide");
+								table.draw(false);
+							}else{
+								alert(res.msg);
+							}
 						}
-					}
-				})
+					})
 				})
 				
 			})

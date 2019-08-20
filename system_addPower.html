@@ -276,6 +276,8 @@
 			}
 			
 			$(function() {
+				$(".treeview").eq(5).addClass("menu-open").find("ul.treeview-menu").show().find("li").eq(2).addClass("active");
+				
 				$(".sidebar a[href='account-power.html']").parent().addClass('active')
 				$(".sidebar a[href='account-power.html']").parent().parent().parent().addClass('active')
 				$('.power').on('click', 'i', function() {
@@ -379,12 +381,28 @@
 
 							}
 							$(".power").append(str)
-							if(localStorage.getItem('operation') == 1) {
-								$("#name").val(localStorage.getItem('powerName'))
-								var arr = localStorage.getItem('powerDetails').split(',')
-								for(var i = 0; i < arr.length; i++) {
-									$("[code=" + arr[i] + "]").prop('checked', true)
-								}
+							
+							if(GetRequest().powerId){
+								console.log(GetRequest().name)
+								$("#name").val(localStorage.getItem("fr_roleName"));
+								$.ajax({
+									type: "post",
+									url: url + "system/showRoleDetails",
+									async: true,
+									contentType: "application/json",
+									dataType: 'json',
+									data: JSON.stringify({
+										token: localStorage.getItem('fr_token'),
+										roleId:GetRequest().powerId
+									}),
+									success:function(res){
+										$.each(res.data.split(','),function(index,item){
+											$("[code = "+item+"]").prop("checked",true);
+											console.log(item);
+											console.log($("[code = '"+item+"']"));
+										})
+									}
+								})
 							}
 						} else {
 							alert(res.msg)
@@ -395,29 +413,7 @@
 					}
 				});
 				
-				if(GetRequest().powerId){
-					console.log(GetRequest().name)
-					$("#name").val(localStorage.getItem("fr_roleName"));
-					
-					$.ajax({
-						type: "post",
-						url: url + "system/showRoleDetails",
-						async: true,
-						contentType: "application/json",
-						dataType: 'json',
-						data: JSON.stringify({
-							token: localStorage.getItem('fr_token'),
-							roleId:GetRequest().powerId
-						}),
-						success:function(res){
-							$.each(res.data.split(','),function(index,item){
-								$("[code = "+item+"]").prop("checked",true);
-								console.log(item);
-								console.log($("[code = '"+item+"']"));
-							})
-						}
-					})
-				}
+				
 				
 				$("#save").click(function() {
 					var roleDetailsArr=[];

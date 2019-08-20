@@ -198,7 +198,7 @@
 		<script src="js/nav.js"></script>
 		<script src="js/fr.js"></script>
 		<script type="text/javascript">
-			$(".treeview").eq(1).addClass("menu-open").find("ul.treeview-menu").show().find("li").addClass("active");
+			$(".treeview").eq(1).addClass("menu-open").find("ul.treeview-menu").show().find("li").eq(0).addClass("active");
 			var param = {
 				token: localStorage.getItem("fr_token"),
 				id: GetRequest().id

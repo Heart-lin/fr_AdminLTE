@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +26,7 @@
 						<li>
 							<a href="#"><i class="fa fa-dashboard"></i>财务管理</a>
 						</li>
-						<li class="active">收支明细</li>
+						<li class="active">待激活账号审核</li>
 					</ol>
 				</section>
 				<section class="content">
@@ -33,25 +34,12 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="startTime" />
-									-
-									<input type="text" class="form-control time" id="endTime" />
+									<span>用户id</span>
+									<input type="text" name="" id="userid" value="" />
 								</div>
 								<div class="inline-block">
-									<select name="">
-										<option value="">选择类型</option>
-										<option value="1">激活</option>
-										<option value="2">充值</option>
-										<option value="3">提现</option>
-										<option value="4">收益</option>
-									</select>
-								</div>
-								<div class="inline-block">
-									<input type="text" placeholder="" />
-								</div>
-								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
+									<span>手机号</span>
+									<input type="text" name="" id="phone" value="" />
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -59,58 +47,19 @@
 						<div class="about_card">
 							<div class="details_card">
 								<div class="box-body">
-									<div class="box_body_card list list5" style="background-color: #E7F4FF;border-radius:5px;">
-										<ul id="countData">
-											<li>
-												<div class="card_title">
-													<span>充值收入</span>
-												</div>
-												<div class="card_content">
-													<span name="rechargeMoney">--</span>
-												</div>
-											</li>
-											<li>
-												<div class="card_title">
-													<span>订单收入</span>
-												</div>
-												<div class="card_content">
-													<span name="drawMoney">--</span>
-												</div>
-											</li>
-											<li>
-												<div class="card_title">
-													<span>激活收入</span>
-												</div>
-												<div class="card_content">
-													<span name="activeMoney">--</span>
-												</div>
-											</li>
-											<li>
-												<div class="card_title">
-													<span>利润</span>
-												</div>
-												<div class="card_content">
-													<span name="incomeMoney">--</span>
-												</div>
-											</li>
-										</ul>
-									</div>
 									<table id="example" class="table table-bordered table-hover picTable">
 										<!--<thead>-->
 										<thead>
 											<tr>
 												<th>订单号</th>
-												<th>订单时间</th>
-												<th>项目</th>
-												<th>所属ID</th>
-												<th>金额</th>
-												<th>账户金额</th>
+												<th>注册账号</th>
+												<th>激活时间</th>
+												<th>支付凭证</th>
+												<th>激活费用</th>
+												<th>操作</th>
 											</tr>
 										</thead>
-										<!--</thead>-->
-										<tbody>
-											
-										</tbody>
+										<tbody></tbody>
 									</table>
 								</div>
 							</div>
@@ -131,23 +80,13 @@
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-		
-		
+
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			getPic();
 			$(function() {
-				$('#startTime').datepicker({
-					autoclose: true,
-					format: 'yyyy-mm-dd',
-				})
-				$('#endTime').datepicker({
-					autoclose: true,
-					format: 'yyyy-mm-dd',
-				})
-				
-				
 				var table = $('#example').DataTable({
 					'ordering': false,
 					'lengthChange': false,
@@ -157,17 +96,15 @@
 					"serverSide": true,
 					"ajax": {
 						"type": 'post',
-						"url": url + '/financial/IODetails',
+						"url": url + '/financial/unActiveUserList',
 						"contentType": "application/json",
 						"data": function(d) {
 							var data = {
-								startTime:$("#startTime").val(),
-								endTime:$("#endTime").val(),
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
-								userId: $('#userId').val(),
-								type:$("#type").val(),
 								token: localStorage.getItem('fr_token'),
+								userId:$("#userId").val(), //输入框内容 用户id
+								phone:$("#phone").val(), //用户手机号
 							}
 							return JSON.stringify(data)
 						},
@@ -180,11 +117,11 @@
 								alert(datajson.msg)
 								return false;
 							}
-							$.each(datajson.data.countData,function(index,item){
-								console.log(datajson.data.countData)
-								$("#countData [name="+index+"]").text(item);
-							})
-							
+							//							$.each(datajson.data.countData,function(index,item){
+							//								console.log(datajson.data.countData)
+							//								$("#countData [name="+index+"]").text(item);
+							//							})
+
 							var json = {};
 							json.recordsTotal = datajson.data.totalCount;
 							json.recordsFiltered = datajson.data.totalCount;
@@ -192,23 +129,96 @@
 							return JSON.stringify(json);
 						}
 					},
-					"columns": [
-						{data: 'id'},
-						{data: 'time'},
-						{data: null,render:function(data){
-							console.log(data.type)
-							return financial_account_Type(data.type);
-						}},
-						{data: 'userId'},
-						{data: null,render:function(data){
-							return financialMoney(data.money);
-						}},
-						{data: "accountMoney"}
+					"columns": [{
+							data: 'id'
+						},
+						{
+							data: 'phone'
+						},
+						{
+							data: 'time'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return '<img src='+$("#picUrl").val()+data.certificate+' style="width:100px;height:100px;">';
+							}
+						},
+						{
+							data: null,
+							render: function(data) {
+								return financialMoney(data.money);
+							}
+						},
+						
+						{
+							data: null,
+							render: function(data) {
+								var str = "<input type='hidden' value='"+JSON.stringify(data)+"'>";
+								return str+'<button class="btn bg-green margin-r-5 save" financialId=' + data.id + '>确认到帐</button><button class="btn bg-green margin-r-5 delete" financialId=' + data.id + '>作废</button>';
+							}
+						},
 					]
 				})
 				
-				$("#search").click(function(){
-					table.ajax.reload();
+				$("#example").on("click",".save",function(){
+					var item = JSON.parse($(this).siblings("input").val());
+					var param = {
+						id:item.id, //充值订单id
+						userId:item.userId, //用户id
+						token: localStorage.getItem("fr_token")
+					}
+					$.ajax({
+						type: "post",
+						url: url + "/financial/confirmActive",
+						async: true,
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							}else if(res.returnCode == 200) {
+								alert(res.msg);
+								table.draw(false);
+							}else{
+								alert(res.msg)
+							}
+						},
+						error:function(){
+						
+						}
+					})
+				})
+				
+				$("#example").on("click",".delete",function(){
+					var item = JSON.parse($(this).siblings("input").val());
+					var param = {
+						id:item.id, //充值订单id
+						userId:item.userId,
+						token: localStorage.getItem("fr_token")
+					}
+					$.ajax({
+						type: "post",
+						url: url + "/financial/invalidActive",
+						async: true,
+						data: JSON.stringify(param),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							}else if(res.returnCode == 200) {
+								alert(res.msg);
+								table.draw(false);
+							}else{
+								alert(res.msg)
+							}
+						},
+						error:function(){
+						
+						}
+					})
 				})
 			})
 		</script>
