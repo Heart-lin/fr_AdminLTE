@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +26,7 @@
 						<li>
 							<a href="#"><i class="fa fa-dashboard"></i>财务管理</a>
 						</li>
-						<li class="active">提现审核</li>
+						<li class="active">转账审核</li>
 					</ol>
 				</section>
 				<section class="content">
@@ -33,14 +34,13 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>账号</span>
-									<input type="text" placeholder="" id="phone"/>
+									<span>手机号</span>
+									<input type="text" placeholder="" />
 								</div>
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info"id="search">搜索</button>
+									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
 								</div>
 							</div>
-							<!-- /.box-tools -->
 						</div>
 						<div class="about_card">
 							<div class="details_card">
@@ -49,13 +49,11 @@
 										<!--<thead>-->
 										<thead>
 											<tr>
-												<th>订单号</th>
-												<th>账户类型</th>
-												<th>账号</th>
-												<th>户名</th>
-												<th>所属ID</th>
-												<th>提现金额</th>
-												<th>账户余额</th>
+												<th>转账订单号</th>
+												<th>时间</th>
+												<th>转入账户（余额）</th>
+												<th>转出账户（余额）</th>
+												<th>转账CCP币额</th>
 												<th>操作</th>
 											</tr>
 										</thead>
@@ -80,7 +78,7 @@
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-		
+
 		<script src="js/fr_func.js"></script>
 		<script src="js/modal.js"></script>
 		<script src="js/fr.js"></script>
@@ -96,13 +94,13 @@
 					"serverSide": true,
 					"ajax": {
 						"type": 'post',
-						"url": url + '/financial/unReviewDrawList',
+						"url": url + 'financial/transferReviewList',
 						"contentType": "application/json",
 						"data": function(d) {
 							var data = {
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
-								phone: $('#phone').val(),
+								phone: $("#phone").val(), //输入框,手机号
 								token: localStorage.getItem('fr_token'),
 							}
 							return JSON.stringify(data)
@@ -123,41 +121,47 @@
 							return JSON.stringify(json);
 						}
 					},
-					"columns": [
-						{data: 'id'},
-						{data: null,render:function(data){
-							return codeType(data.type);
-						}},
-						{data: 'account'},
-						{data: 'accountName'},
-						{data: 'userId'},
-						
-						
-						{data: null,render:function(data){
-							return financialMoney(data.money*-1);
-						}},
-						
-						{data: 'accountMoney'},
-						{data: null,render:function(data){
-							var str = "<input type='hidden' value='"+JSON.stringify(data)+"'>";
-							return str+'<button class="btn bg-green margin-r-5 save">已到账</button><button class="btn bg-green margin-r-5 reject">作废</button>';
-						}},
+					"columns": [{
+							data: 'id'
+						},
+						{
+							data: 'transferTime'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return data.inUserPhone + "(" + data.inUserMoney + ")";
+							}
+						},
+						{
+							data: null,
+							render: function(data) {
+								return data.outUserPhone + "(" + data.outUserMoney + ")";
+							}
+						},
+						{
+							data: null,
+							render: function(data) {
+								return financialMoney(-1 * data.money);
+							}
+						},
+						{
+							data: null,
+							render: function(data) {
+								return '<button class="btn bg-green margin-r-5 save" orderId="' + data.id + '">通过</button><button class="btn bg-green margin-r-5 reject" orderId="' + data.id + '">驳回</button>';
+							}
+						},
 					]
 				})
-				
-				
-				//已到账
-				$("#example").on("click",".save",function(){
-					var item = JSON.parse($(this).siblings("input").val());
+
+				$("#example").on("click", ".save", function() {
 					var param = {
-						id:item.id, //充值订单id
-						userId:item.userId, //用户id
+						id: $(this).attr("orderId"), //充值订单id
 						token: localStorage.getItem("fr_token")
 					}
-					
 					$.ajax({
 						type: "post",
-						url: url + "financial/confirmDraw",
+						url: url + "financial/confirmTransfer",
 						async: true,
 						data: JSON.stringify(param),
 						contentType: "application/json",
@@ -165,30 +169,32 @@
 						success: function(res) {
 							if(res.returnCode == 501) {
 								ToLogin(res)
-							}else if(res.returnCode == 200) {
+							} else if(res.returnCode == 200) {
 								alert(res.msg);
 								table.draw(false);
-							}else{
+							} else {
 								alert(res.msg)
 							}
 						},
-						error:function(){
-						
+						error: function() {
+
 						}
 					})
 				})
+
+				
 				
 				
 				//驳回
 				function rejectAjax(id) {
 					var param = {
-						id:$("#"+ id +" [name=id]").val(), //充值订单id
+						id: $("#"+ id +" [name=id]").val(), //充值订单id
 						remark:$("#"+ id +" [name=remark]").val(),
 						token: localStorage.getItem("fr_token")
 					}
 					$.ajax({
 						type: "post",
-						url: url + "financial/invalidDraw",
+						url: url + "financial/invalidTransfer",
 						async: true,
 						data: JSON.stringify(param),
 						contentType: "application/json",
@@ -210,46 +216,14 @@
 					})
 				}
 				$("#example").on("click", ".reject", function() {
-					var item = JSON.parse($(this).siblings("input").val());
-					var id = item.id;
-					var userId = item.userId;
-					rejectModal("rejectModal",{"id":id,"userId":userId})
+					var id = $(this).attr("orderId");
+					rejectModal("rejectModal",{"id":id})
 				})
 				$("body").on("click","#rejectModal .save",function(){
 					rejectAjax("rejectModal");
 				})
-				
-//				$("#example").on("click",".delete",function(){
-//					var item = JSON.parse($(this).siblings("input").val());
-//					var param = {
-//						id:item.id, //提现订单id
-//						userId:item.userId, //用户id
-//						token: localStorage.getItem("fr_token")
-//					}
-//					$.ajax({
-//						type: "post",
-//						url: url + "financial/invalidDraw",
-//						async: true,
-//						data: JSON.stringify(param),
-//						contentType: "application/json",
-//						dataType: "json",
-//						success: function(res) {
-//							if(res.returnCode == 501) {
-//								ToLogin(res)
-//							}else if(res.returnCode == 200) {
-//								alert(res.msg);
-//								table.draw(false);
-//							}else{
-//								alert(res.msg)
-//							}
-//						},
-//						error:function(){
-//						
-//						}
-//					})
-//				})
-				
-				$("#search").click(function(){
+
+				$("#search").click(function() {
 					table.ajax.reload();
 				})
 			})

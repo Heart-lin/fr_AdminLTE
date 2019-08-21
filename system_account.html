@@ -34,10 +34,10 @@
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<div class="inline-block">
-								<input type="text" placeholder="请输入姓名搜索" />
+								<input type="text" placeholder="" />
 							</div>
 							<div class="inline-block">
-								<button type="button" class="btn btn-block btn-info">搜索</button>
+								<button type="button" class="btn btn-block btn-info"id="search">搜索</button>
 							</div>
 							<div class="inline-block">
 								<a type="button" href="system_addAccount.html" class="btn btn-block btn-info" id="addAccount"><i class="fa fa-fw fa-plus"></i>添加账号</a>
@@ -262,7 +262,10 @@
 					})
 					
 				})
-
+				
+				$("#search").click(function(){
+					table.ajax.reload();
+				})
 			})
 		</script>
 	</body>

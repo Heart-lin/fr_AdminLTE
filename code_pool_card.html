@@ -34,14 +34,14 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>注册时间：</span>
+									<span>时间：</span>
 									<input type="text" class="form-control time" id="startTime" />
 									-
 									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<span>用户id：</span>
-									<input type="text" placeholder="" id="userId"/>
+									<span>账号：</span>
+									<input type="text" placeholder="" id="phone"/>
 								</div>
 								<div class="inline-block">
 									<select id="status">
@@ -142,6 +142,7 @@
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			getPic();
 			$(function() {
 				
 				$('#startTime').datepicker({
@@ -206,7 +207,10 @@
 							data: 'phone'
 						},
 						{
-							data: 'codeUrl'
+							data: null,
+							render: function(data) {
+								return "<img src='"+$("#picUrl").val()+data.codeUrl+"'>";
+							}
 						},
 						{
 							data: 'account'

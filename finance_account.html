@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,16 +28,15 @@
 						</li>
 						<li class="active">收款账户管理</li>
 					</ol>
+					<input type="hidden" id="token"/>
 				</section>
 				<section class="content">
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<div class="">
+
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
-								</div>
-								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info">搜索</button>
+									<button type="button" class="btn btn-block btn-info" id="add"><i class="fa fa-fw fa-plus"></i>添加收款账户</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -69,6 +69,94 @@
 				</section>
 			</div>
 		</div>
+		<div class="modal fade in" id="addModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  				<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">添加账号</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="receiveType" class="col-sm-3 control-label">收款类型</label>
+
+									<div class="col-sm-9">
+										<select name="receiveType" id="receiveType" class="fr_select">
+											<option value="1">支付宝</option>
+											<option value="2">微信</option>
+											<option value="3">银行卡</option>
+											<option value="4">商户码</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="receiveAccount" class="col-sm-3 control-label">收款账号</label>
+
+									<div class="col-sm-9">
+										<input name="receiveAccount" id="receiveAccount" style="width:100%;padding:10px;">
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-sm-3 control-label">选择收款码</label>
+
+									<div class="col-sm-9">
+										<label for="codePicInput">
+											<img src = "img/add.png" id="codePic" style="width:100%;">
+										</label>
+										<input type="file" id="codePicInput" class="pic" accept="image/*" capture="camera" style="display:none;">
+										<!--<i>*上传身份证正面照</i>-->
+									</div>
+									<input type="hidden" name="codeUrl" id="codeUrl" style="width:100%;padding:10px;">
+								</div>
+								<div class="form-group">
+									<label for="maxCount" class="col-sm-3 control-label">收款上限笔数</label>
+
+									<div class="col-sm-9">
+										<input name="maxCount" id="maxCount" style="width:100%;padding:10px;">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="maxMoney" class="col-sm-3 control-label">收款上限金额</label>
+
+									<div class="col-sm-9">
+										<input name="maxMoney" id="maxMoney" style="width:100%;padding:10px;">
+									</div>
+								</div>
+								<div class="bank" style="display: none;">
+									<div class="form-group">
+										<label for="receiveName" class="col-sm-3 control-label">收款人真实姓名</label>
+
+										<div class="col-sm-9">
+											<input name="receiveName" id="receiveName" style="width:100%;padding:10px;">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="bank" class="col-sm-3 control-label">银行名称</label>
+
+										<div class="col-sm-9">
+											<input name="bank" id="bank" style="width:100%;padding:10px;">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="accountInfo" class="col-sm-3 control-label">收款账户信息</label>
+
+										<div class="col-sm-9">
+											<input name="accountInfo" id="accountInfo" style="width:100%;padding:10px;">
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary save">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="dist/js/adminlte.min.js"></script>
@@ -81,11 +169,28 @@
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<script src="bower_components/moment/min/moment.min.js"></script>
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-		
+		<script type="text/javascript" src="https://unpkg.com/qiniu-js@2.5.3/dist/qiniu.min.js"></script>
 		<script src="js/fr_func.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			getPic();
+			$.ajax({
+				type: "post",
+				url: url + "system/getQiniuToken",
+				async: true,
+				contentType: "application/json",
+				dataType: 'json',
+				success: function(res) {
+					if(res.returnCode == 501) {
+						ToLogin(res)
+					} else if(res.returnCode == 200) {
+						$("#token").val(res.data)
+					} else {
+						alert(res.msg);
+					}
+				}
+			})
 			$(function() {
 				var table = $('#example').DataTable({
 					'ordering': false,
@@ -115,11 +220,11 @@
 								alert(datajson.msg)
 								return false;
 							}
-//							$.each(datajson.data.countData,function(index,item){
-//								console.log(datajson.data.countData)
-//								$("#countData [name="+index+"]").text(item);
-//							})
-							
+							//							$.each(datajson.data.countData,function(index,item){
+							//								console.log(datajson.data.countData)
+							//								$("#countData [name="+index+"]").text(item);
+							//							})
+
 							var json = {};
 							json.recordsTotal = datajson.data.totalCount;
 							json.recordsFiltered = datajson.data.totalCount;
@@ -127,43 +232,66 @@
 							return JSON.stringify(json);
 						}
 					},
-					"columns": [
-						{data: 'id'},
-						{data: null,render:function(data){
-							return codeType(data.receiveType);
-						}},
-						{data: null,render:function(data){
-							return data.codeUrl;
-						}},
-						{data: 'receiveAccount'},
-						{data: 'maxCount'},
-						{data: null,render:function(data){
-							return data.maxMoney+"笔";
-						}},
-						{data: 'money'},
-						
-						{data: null,render:function(data){
-							return financialType(data.state);
-						}},
-						{data: null,render:function(data){
-							var active = "",open="关闭";
-							if(data.status == 1){
-								active="active";
-								open="开启"
+					"columns": [{
+							data: 'id'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return codeType(data.receiveType);
 							}
-							return '<div class="fr_swich '+ active +'" fr_id = "'+ data.id +'"><div class="fr_swich_body"></div><span class="fr_swich_txt">'+ open +'</span></div>';
-						}},
+						},
+						{
+							data: null,
+							render: function(data) {
+								return "<img src='" + $("#picUrl").val() + data.codeUrl + "'>";
+							}
+						},
+						{
+							data: 'receiveAccount'
+						},
+						{
+							data: null,
+							render: function(data) {
+								return data.maxCount + "笔";
+							}
+						},
+						{
+							data: 'maxMoney'
+						},
+						{
+							data: 'money'
+						},
+
+						{
+							data: null,
+							render: function(data) {
+								return financialType(data.state);
+							}
+						},
+						{
+							data: null,
+							render: function(data) {
+								var active = "",
+									open = "关闭";
+								if(data.status == 1) {
+									active = "active";
+									open = "开启"
+								}
+								return '<div class="fr_swich ' + active + '" fr_id = "' + data.id + '"><div class="fr_swich_body"></div><span class="fr_swich_txt">' + open + '</span></div>';
+							}
+						},
 					]
 				})
-				
-				$("#example").on("click",".fr_swich",function(){
-					var id= $(this).attr("fr_id");
-					var _this =$(this);
+
+				$("#example").on("click", ".fr_swich", function() {
+					var id = $(this).attr("fr_id");
+					var _this = $(this);
 					var status;
-					if($(this).hasClass("active")){
+					if($(this).hasClass("active")) {
 						status = "-1";
-					}else{
-						status = "1"; 
+					} else {
+						status = "1";
 					}
 					$.ajax({
 						type: "post",
@@ -173,25 +301,126 @@
 						dataType: 'json',
 						data: JSON.stringify({
 							token: localStorage.getItem('fr_token'),
-							id:id,
-							status:status,
+							id: id,
+							status: status,
 						}),
-						success:function(res){
+						success: function(res) {
 							if(res.returnCode == 501) {
 								ToLogin(res)
 							} else if(res.returnCode == 200) {
-								if($(_this).hasClass("active")){
+								if($(_this).hasClass("active")) {
 									$(_this).removeClass("active");
-									
-								}else{
+
+								} else {
 									$(_this).addClass("active");
 									$(_this).find(".fr_swich_txt").text("开启");
 								}
-							}else{
+							} else {
 								alert(res.msg);
 							}
 						}
 					})
+				})
+
+				$("#add").click(function() {
+					$("#addModal").modal("show");
+					$("#addModal").find("input").val("");
+				})
+
+				$("#receiveType").change(function() {
+					if($("#receiveType").val() == 3) {
+						$(".bank").show();
+					} else {
+						$(".bank").hide();
+					}
+				})
+
+				$("#addModal .save").click(function() {
+					var parme = {
+						token: localStorage.getItem('fr_token'),
+						receiveType: $("#receiveType").val(), //收款类型 1支付宝 2微信 3银行卡 4商户码
+						receiveAccount: $("#receiveAccount").val(), //收款账号
+						codeUrl: $("#codeUrl").val(), //收款码地址
+						maxCount: $("#maxCount").val(), //收款上限笔数
+						maxMoney: $("#maxMoney").val(), //收款上限金额
+					}
+					if($("#receiveType").val() == 3) {
+						parme["receiveName"] = $("#receiveType").val();
+						parme["bank"] = $("#bank").val();
+						parme["accountInfo"] = $("#accountInfo").val();
+					}
+
+					$.ajax({
+						type: "post",
+						url: url + "financial/addReceiveAccount",
+						async: true,
+						contentType: "application/json",
+						dataType: 'json',
+						data: JSON.stringify(parme),
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								alert(res.msg);
+								$("#addModal").modal("hide");
+								table.draw(false);
+							} else {
+								alert(res.msg);
+							}
+						}
+					})
+
+				})
+				
+				
+				
+				function uploadImg(pic,token) {
+					var name = Date.parse(new Date()) +localStorage.getItem('fr_name');
+					var observer = {
+						next(res) {},
+						error(err) {
+							$(".popup").hide();
+							mui.alert(err);
+						},
+						complete(res) {
+							$("#codePic").attr("src", $("#picUrl").val()+ res.key);
+//							mui.alert("图片上传成功！","实名认证");
+							$("#codeUrl").val(res.key);
+						},
+					};
+					var putExtra = {
+						fname: "",
+						params: {},
+						mimeType: [] || null
+					};
+					var config = {
+						useCdnDomain: true,
+						region: qiniu.region.z2,
+					};
+					/*var date_ = Date.parse(new Date());
+					date_ = (date_ + i) + pic[i].files[0].name;*/
+			
+					var observable = qiniu.upload(pic, name, $("#token").val(), putExtra, config)
+					var subscription = observable.subscribe(observer)
+					//				data.append(name[i], date_ + "?imageslim");
+				}
+				
+				$("#codePicInput").change(function(){
+					var imgid = 'id' + $(this).attr("id")
+					var reads = new FileReader();
+					f = document.getElementById($(this).attr("id"));
+					pic = f.files[0];
+					reads.readAsDataURL(pic);
+					reads.onload = function(e) {
+						uploadImg(pic,token);
+					};
+//					reads.onload = function(e) {
+//						uploadImg(this.result);
+//					};
+					
+//					console.log($(this).val());
+//					return false;
+					
 				})
 			})
 		</script>

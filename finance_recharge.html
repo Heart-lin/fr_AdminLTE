@@ -33,9 +33,12 @@
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<div class="">
-
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info"><i class="fa fa-fw fa-plus"></i>添加收款方式</button>
+									<span>账号</span>
+									<input type="text" placeholder="" id="phone"/>
+								</div>
+								<div class="inline-block">
+									<button type="button" class="btn btn-block btn-info"id="search">搜索</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -49,6 +52,7 @@
 											<tr>
 												<th>订单号</th>
 												<th>充值时间</th>
+												<th>账号</th>
 												<th>充值凭证</th>
 												<th>充值金额</th>
 												<th>账户余额</th>
@@ -78,9 +82,11 @@
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
 		<script src="js/fr_func.js"></script>
+		<script src="js/modal.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			getPic();
 			$(function() {
 				var table = $('#example').DataTable({
 					'ordering': false,
@@ -91,13 +97,15 @@
 					"serverSide": true,
 					"ajax": {
 						"type": 'post',
-						"url": url + '//financial/unReviewRechargeList',
+						"url": url + '/financial/unReviewRechargeList',
 						"contentType": "application/json",
 						"data": function(d) {
 							var data = {
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
 								token: localStorage.getItem('fr_token'),
+								userId:$("#userId").val(),
+								phone:$("#phone").val()
 							}
 							return JSON.stringify(data)
 						},
@@ -129,9 +137,12 @@
 							data: 'time'
 						},
 						{
+							data: 'phone'
+						},
+						{
 							data: null,
 							render: function(data) {
-								return data.certificate;
+								return "<img src='"+$("#picUrl").val()+data.certificate+"'>";
 							}
 						},
 						{
@@ -147,7 +158,7 @@
 							data: null,
 							render: function(data) {
 								var str = "<input type='hidden' value='"+JSON.stringify(data)+"'>";
-								return str+'<button class="btn bg-green margin-r-5 save" financialId=' + data.id + '>确认到帐</button><button class="btn bg-green margin-r-5 delete" financialId=' + data.id + '>作废</button>';
+								return str+'<button class="btn bg-green margin-r-5 save">确认到帐</button><button class="btn bg-green margin-r-5 reject">作废</button>';
 							}
 						},
 					]
@@ -185,10 +196,14 @@
 					})
 				})
 				
-				$("#example").on("click",".delete",function(){
-					var item = JSON.parse($(this).siblings("input").val());
+				
+				
+				function rejectAjax(id) {
 					var param = {
-						id:item.id, //充值订单id
+						id:$("#"+ id +" [name=id]").val(), 
+						userId:$("#"+ id +" [name=userId]").val(), 
+						money:$("#"+ id +" [name=money]").val(), 
+						remark:$("#"+ id +" [name=remark]").val(),
 						token: localStorage.getItem("fr_token")
 					}
 					$.ajax({
@@ -201,17 +216,62 @@
 						success: function(res) {
 							if(res.returnCode == 501) {
 								ToLogin(res)
-							}else if(res.returnCode == 200) {
+							} else if(res.returnCode == 200) {
 								alert(res.msg);
+								$("#"+id).modal("hide");
 								table.draw(false);
-							}else{
+							} else {
 								alert(res.msg)
 							}
 						},
-						error:function(){
-						
+						error: function() {
+
 						}
 					})
+				}
+				$("#example").on("click", ".reject", function() {
+					var item = JSON.parse($(this).siblings("input").val());
+//					var id = item.id;
+					rejectModal("rejectModal",{"id":item.id,"userId":item.userId,"money":item.money})
+				})
+				$("body").on("click","#rejectModal .save",function(){
+					rejectAjax("rejectModal");
+				})
+				
+				
+				
+				
+//				$("#example").on("click",".reject",function(){
+//					var item = JSON.parse($(this).siblings("input").val());
+//					var param = {
+//						id:item.id, //充值订单id
+//						token: localStorage.getItem("fr_token")
+//					}
+//					$.ajax({
+//						type: "post",
+//						url: url + "financial/invalidRecharge",
+//						async: true,
+//						data: JSON.stringify(param),
+//						contentType: "application/json",
+//						dataType: "json",
+//						success: function(res) {
+//							if(res.returnCode == 501) {
+//								ToLogin(res)
+//							}else if(res.returnCode == 200) {
+//								alert(res.msg);
+//								table.draw(false);
+//							}else{
+//								alert(res.msg)
+//							}
+//						},
+//						error:function(){
+//						
+//						}
+//					})
+//				})
+				
+				$("#search").click(function(){
+					table.ajax.reload();
 				})
 			})
 		</script>

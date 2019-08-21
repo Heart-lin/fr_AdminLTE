@@ -177,6 +177,17 @@
 										<input name="url" style="width:100%;padding:10px;">
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">开关</label>
+									<div class="col-sm-9 radiosw" style="padding-top: 7px;">
+										<label>
+								             <input type="radio" name="addstatus" class="flat-red" value="1" checked>  开
+								        </label>
+										<label>
+								           	<input type="radio" name="addstatus" value="-1" class="flat-red">  关
+								        </label>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -213,13 +224,23 @@
 									<label for="account" class="col-sm-3 control-label">url</label>
 
 									<div class="col-sm-9">
-										<input type="hidden" name="id" />
 										<input name="url" style="width:100%;padding:10px;">
 									</div>
 									<!--<div class="col-sm-9">
 										<input type="hidden" name="id" />
 										<textarea name="url" style="width:100%;padding:10px;"></textarea>
 									</div>-->
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">开关</label>
+									<div class="col-sm-9 radiosw" style="padding-top: 7px;">
+										<label>
+								             <input type="radio" name="updateStatus" class="flat-red" value="1">  开
+								        </label>
+										<label>
+								           	<input type="radio" name="updateStatus" value="-1" class="flat-red">  关
+								        </label>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -495,6 +516,7 @@
 					$("#updateProclamation [name=id]").val(item.id);
 					$("#updateProclamation [name=title]").val(item.title);
 					$("#updateProclamation [name=url]").val(item.url);
+					$("#updateProclamation [name=updateStatus][value="+item.status+"]").iCheck('check');
 					$("#updateProclamation").modal("show");
 				})
 
@@ -510,8 +532,10 @@
 						id: $("#updateProclamation [name=id]").val(), //公告id
 						url: $("#updateProclamation [name=url]").val(), //页面地址
 						title: $("#updateProclamation [name=title]").val(), //标题
-						status: 1 //-1关闭 1开启
+						status: $("#updateProclamation [name=updateStatus]:checked").val() //-1关闭 1开启
 					}
+					console.log(param);
+					return false;
 					$.ajax({
 						type: "post",
 						url: url + "system/updateAppProclamation",
@@ -544,7 +568,7 @@
 						token: localStorage.getItem('fr_token'),
 						url: $("#addProclamationModal [name=url]").val(), //页面地址
 						title: $("#addProclamationModal [name=title]").val(), //标题
-						status: 1 //-1关闭 1开启
+						status: $("#updateProclamation [name=updateStatus]:checked").val() //-1关闭 1开启
 					}
 					$.ajax({
 						type: "post",

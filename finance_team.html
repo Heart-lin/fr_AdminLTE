@@ -33,14 +33,37 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>注册时间：</span>
-									<input type="text" class="form-control time" id="reservation" />
+									<span>时间：</span>
+									<input type="text" class="form-control time" id="startTime" />
+									-
+									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<input type="text" placeholder="请输入" />
+									<span>类型</span>
+									<select name="" id="codeType">
+										<option value="">全部</option>
+										<option value="1">支付宝</option>
+										<option value="2">微信</option>
+										<option value="3">银行卡</option>
+										<option value="4">商户</option>
+									</select>
 								</div>
 								<div class="inline-block">
-									<button type="button" class="btn btn-block btn-info">搜索</button>
+									<span>收益级别</span>
+									<select name="" id="level">
+										<option value="">全部</option>
+										<option value="-1">领导人</option>
+										<option value="0">订单归属者</option>
+										<option value="1">一级</option>
+										<option value="2">二级</option>
+										<option value="3">三级</option>
+										<option value="4">四级</option>
+										<option value="5">五级</option>
+										<option value="6">六级及以上</option>
+									</select>
+								</div>
+								<div class="inline-block">
+									<button type="button" class="btn btn-block btn-info"id="search">搜索</button>
 								</div>
 							</div>
 							<!-- /.box-tools -->
@@ -105,10 +128,10 @@
 										<thead>
 											<tr>
 												<th>收益ID</th>
-												<th>所属订单</th>
+												<th>收款方式</th>
 												<th>订单时间</th>
 												<th>订单金额</th>
-												<th>收益类型（第几级）</th>
+												<th>收益级别</th>
 												<th>收益金额</th>
 											</tr>
 										</thead>
@@ -177,6 +200,8 @@
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
 								token: localStorage.getItem('fr_token'),
+								level:$("#level").val(),
+								codeType:$("#codeType").val()
 							}
 							return JSON.stringify(data)
 						},
@@ -212,7 +237,6 @@
 						{data: 'receiveOrderId'},
 						{data: 'time'},
 						{data: 'orderMoney'},
-						
 						{data: null,render:function(data){
 							return level(data.level);
 						}},
@@ -221,14 +245,18 @@
 					]
 				})
 
-				$('#start_time').datepicker({
-	autoclose: true,
-	format: "YYYY-MM-DD"
-})
-$('#end_time').datepicker({
-	autoclose: true,
-	format: "YYYY-MM-DD"
-})
+				$('#startTime').datepicker({
+					autoclose: true,
+					format: "YYYY-MM-DD"
+				})
+				$('#endTime').datepicker({
+					autoclose: true,
+					format: "YYYY-MM-DD"
+				})
+				
+				$("#search").click(function(){
+					table.ajax.reload();
+				})
 			})
 		</script>
 	</body>

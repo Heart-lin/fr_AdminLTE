@@ -34,14 +34,14 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>用户id</span>
-									<input type="text" name="" id="userid" value="" />
+									<span>账号：</span>
+									<input type="text" placeholder="" id="phone"/>
 								</div>
 								<div class="inline-block">
-									<span>手机号</span>
-									<input type="text" name="" id="phone" value="" />
+									<button type="button" class="btn btn-block btn-info"id="search">搜索</button>
 								</div>
 							</div>
+								
 							<!-- /.box-tools -->
 						</div>
 						<div class="about_card">
@@ -82,6 +82,7 @@
 		<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
 		<script src="js/fr_func.js"></script>
+		<script src="js/modal.js"></script>
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
@@ -141,7 +142,7 @@
 						{
 							data: null,
 							render: function(data) {
-								return '<img src='+$("#picUrl").val()+data.certificate+' style="width:100px;height:100px;">';
+								return '<img src='+$("#picUrl").val()+data.certificate+'>';
 							}
 						},
 						{
@@ -155,7 +156,7 @@
 							data: null,
 							render: function(data) {
 								var str = "<input type='hidden' value='"+JSON.stringify(data)+"'>";
-								return str+'<button class="btn bg-green margin-r-5 save" financialId=' + data.id + '>确认到帐</button><button class="btn bg-green margin-r-5 delete" financialId=' + data.id + '>作废</button>';
+								return str+'<button class="btn bg-green margin-r-5 save" thisId=' + data.id + '>确认到帐</button><button class="btn bg-green margin-r-5 reject" thisId=' + data.id + '>作废</button>';
 							}
 						},
 					]
@@ -191,16 +192,18 @@
 					})
 				})
 				
-				$("#example").on("click",".delete",function(){
-					var item = JSON.parse($(this).siblings("input").val());
+				
+				
+				function rejectAjax(id) {
 					var param = {
-						id:item.id, //充值订单id
-						userId:item.userId,
+						id:$("#"+ id +" [name=id]").val(), //充值订单id
+						userId:$("#"+ id +" [name=userId]").val(),
+						remark:$("#"+ id +" [name=remark]").val(),
 						token: localStorage.getItem("fr_token")
 					}
 					$.ajax({
 						type: "post",
-						url: url + "/financial/invalidActive",
+						url: url + "financial/invalidActive",
 						async: true,
 						data: JSON.stringify(param),
 						contentType: "application/json",
@@ -208,17 +211,57 @@
 						success: function(res) {
 							if(res.returnCode == 501) {
 								ToLogin(res)
-							}else if(res.returnCode == 200) {
+							} else if(res.returnCode == 200) {
 								alert(res.msg);
+								$("#"+id).modal("hide");
 								table.draw(false);
-							}else{
+							} else {
 								alert(res.msg)
 							}
 						},
-						error:function(){
-						
+						error: function() {
+
 						}
 					})
+				}
+				$("#example").on("click", ".reject", function() {
+					var item = JSON.parse($(this).siblings("input").val());
+					var id = item.id;
+					var userId = item.userId;
+					rejectModal("rejectModal",{"id":id,"userId":userId})
+				})
+				$("body").on("click","#rejectModal .save",function(){
+					rejectAjax("rejectModal");
+				})
+				
+				
+//				$("#example").on("click",".delete",function(){
+//					var item = JSON.parse($(this).siblings("input").val());
+//					
+//					$.ajax({
+//						type: "post",
+//						url: url + "",
+//						async: true,
+//						data: JSON.stringify(param),
+//						contentType: "application/json",
+//						dataType: "json",
+//						success: function(res) {
+//							if(res.returnCode == 501) {
+//								ToLogin(res)
+//							}else if(res.returnCode == 200) {
+//								alert(res.msg);
+//								table.draw(false);
+//							}else{
+//								alert(res.msg)
+//							}
+//						},
+//						error:function(){
+//						
+//						}
+//					})
+//				})
+				$("#search").click(function(){
+					table.ajax.reload();
 				})
 			})
 		</script>

@@ -8,7 +8,20 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
+.popup{
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color: rgba(0,0,0,.3);
+	z-index:99999999;
+}
+.popup img{
+	display: block;
+	margin:100px auto 0;
+	width:300px;
+}
 
 /*body*/
 
@@ -34,7 +47,8 @@ body {
 }
 
 .box-header input, 
-.box-header select{
+.box-header select,
+.fr_select{
 	display: inline-block;
 	height: 34px;
 	border-radius: 3px;

@@ -4,6 +4,10 @@ function GetUrlRelativePath(){
 	var urlArray = url.split("/");
 	return urlArray[urlArray.length-1].split("?")[0];
 }
+function exit(){
+	localStorage.removeItem('fr_token');
+	window.location.href="login.html";
+}
 console.log(GetUrlRelativePath());
 var header=
 '<header class="main-header">\
@@ -18,45 +22,25 @@ var header=
       </a>\
       <div class="navbar-custom-menu">\
         <ul class="nav navbar-nav">\
-          <li class="dropdown notifications-menu">\
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">\
-              <i class="fa fa-bell-o"></i>\
-              <span class="label label-warning">10</span>\
-            </a>\
-          </li>\
-          <li class="dropdown tasks-menu">\
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">\
-              <i class="fa fa-flag-o"></i>\
-              <span class="label label-danger">9</span>\
-            </a>\
-          </li>\
-          <li class="dropdown user user-menu notifications-menu">\
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">\
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">\
-              <span class="hidden-xs">Alexander Pierce</span>\
-            </a>\
-            <ul class="dropdown-menu">\
-              <li>\
-                <ul class="menu">\
-                  <li>\
-                    <a href="#">\
-                      <i class="fa fa-users text-red"></i>个人中心\
-                    </a>\
-                  </li>\
-                  <li>\
-                    <a href="#">\
-                      <i class="fa fa-shopping-cart text-green"></i>个人设置\
-                    </a>\
-                  </li>\
-                  <li>\
-                    <a href="#">\
-                      <i class="fa fa-user text-red"></i>退出登录\
-                    </a>\
-                  </li>\
-                </ul>\
-              </li>\
-            </ul>\
-          </li>\
+          <li class="dropdown user user-menu">\
+			<a href=" " class="dropdown-toggle" data-toggle="dropdown">\
+								<img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">\
+								<span class="hidden-xs manager-name">'+localStorage.getItem('fr_name')+'</span>\
+							</a>\
+							<ul class="dropdown-menu">\
+								<!-- User image -->\
+								<li class="user-header">\
+									<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">\
+									<p class="manager-name">'+localStorage.getItem('fr_name')+'</p>\
+								</li>\
+								<!-- Menu Footer-->\
+								<li class="user-footer">\
+									<div class="pull-right">\
+										<a href="#" class="btn btn-default btn-flat" onclick="exit()">退出登录</a>\
+									</div>\
+								</li>\
+							</ul>\
+						</li>\
         </ul>\
       </div>\
     </nav>\

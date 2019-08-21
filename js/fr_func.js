@@ -133,10 +133,15 @@ function level(level) {
 		str = '四级';
 	} else if(level == 5) {
 		str = '五级';
+	}else if(level == 6) {
+		str = '六级及以上';
+	}else if(level == 0) {
+		str = '订单归属者';
+	}else if(level == "-1") {
+		str = '领导人';
 	}
 	return str;
 }
-
 function financial_account_Type(type) {
 	var str = "";
 	if(type == 1) {
@@ -192,9 +197,21 @@ function getPic() {
 		dataType: 'json',
 		success: function(res) {
 			if(res.returnCode == 200) {
-				var str = '<input type="hiddem" id="picUrl" value="'+res.data+'"/>';
+				var str = '<input type="hiddem" id="picUrl" value="' + res.data + '"/>';
 				$("body").append(str);
-			} 
+			}
 		}
 	})
 }
+
+$(".picTable").on("click","img",function(){
+	if($(".imgpopup").length==0){
+		$("body").append("<div class='popup imgpopup'><img src="+$(this).attr("src")+"></div>");
+	}else{
+		$(".imgpopup").show();
+	}
+	
+})
+$("body").on("click",".imgpopup",function(){
+	$(this).hide();
+})

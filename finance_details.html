@@ -33,22 +33,29 @@
 						<div class="box-header with-border">
 							<div class="">
 								<div class="inline-block">
-									<span>注册时间：</span>
+									<span>时间：</span>
 									<input type="text" class="form-control time" id="startTime" />
 									-
 									<input type="text" class="form-control time" id="endTime" />
 								</div>
 								<div class="inline-block">
-									<select name="">
-										<option value="">选择类型</option>
+									<select name="" id="type">
+										<option value="">全部类型</option>
 										<option value="1">激活</option>
 										<option value="2">充值</option>
 										<option value="3">提现</option>
 										<option value="4">收益</option>
+										<option value="5">转出</option>
+										<option value="6">提现手续费</option>
+										<option value="7">转账手续费</option>
+										<option value="8">订单扣费</option>
+										<option value="9">转入</option>
+										<option value="10">收益转信用点</option>
 									</select>
 								</div>
 								<div class="inline-block">
-									<input type="text" placeholder="" />
+									<span>账号：</span>
+									<input type="text" placeholder="" id="phone"/>
 								</div>
 								<div class="inline-block">
 									<button type="button" class="btn btn-block btn-info" id="search">搜索</button>
@@ -74,7 +81,7 @@
 													<span>订单收入</span>
 												</div>
 												<div class="card_content">
-													<span name="drawMoney">--</span>
+													<span name="incomeMoney">--</span>
 												</div>
 											</li>
 											<li>
@@ -90,7 +97,7 @@
 													<span>利润</span>
 												</div>
 												<div class="card_content">
-													<span name="incomeMoney">--</span>
+													<span name="profitMoney">--</span>
 												</div>
 											</li>
 										</ul>
@@ -101,7 +108,8 @@
 											<tr>
 												<th>订单号</th>
 												<th>订单时间</th>
-												<th>项目</th>
+												<th>账号</th>
+												<th>类型</th>
 												<th>所属ID</th>
 												<th>金额</th>
 												<th>账户金额</th>
@@ -137,6 +145,41 @@
 		<script src="js/fr.js"></script>
 		<script src="js/nav.js"></script>
 		<script type="text/javascript">
+			function financial_details_Type(type) {
+				var str = "";
+				if(type == 1) {
+					str = "激活"
+				} else if(type == 2) {
+					 str = "充值"
+				} else if(type == 3) {
+					 str = "提现"
+				} else if(type == 4) {
+					 str = "收益"
+				} else if(type == 5) {
+					 str = "转出"
+				} else if(type == 6) {
+					 str = "提现手续费"
+				} else if(type == 7) {
+					 str = "转账手续费"
+				} else if(type == 8) {
+					 str = "订单扣费"
+				} else if(type == 9) {
+					 str = "转入"
+				} else if(type == 10) {
+					 str = "收益转信用点"
+				}
+					return str;
+			}
+			
+			function financial_details_Money(type,num){
+				var str = "";
+				if(type==2||type==4||type==9||type==10) {
+					str = '<p class="text-green">+' + num + '</p>';
+				} else {
+					str = '<p class="text-red">-' +  num + '</p>';
+				}
+				return str;
+			}
 			$(function() {
 				$('#startTime').datepicker({
 					autoclose: true,
@@ -165,7 +208,7 @@
 								endTime:$("#endTime").val(),
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
-								userId: $('#userId').val(),
+								phone: $('#phone').val(),
 								type:$("#type").val(),
 								token: localStorage.getItem('fr_token'),
 							}
@@ -195,13 +238,13 @@
 					"columns": [
 						{data: 'id'},
 						{data: 'time'},
+						{data: 'phone'},
 						{data: null,render:function(data){
-							console.log(data.type)
-							return financial_account_Type(data.type);
+							return financial_details_Type(data.type);
 						}},
 						{data: 'userId'},
 						{data: null,render:function(data){
-							return financialMoney(data.money);
+							return financial_details_Money(data.type,data.money);
 						}},
 						{data: "accountMoney"}
 					]

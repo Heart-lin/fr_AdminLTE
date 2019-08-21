@@ -14,6 +14,11 @@
 		<link rel="stylesheet" href="css/fr_style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+		<style>
+			.dataTables_empty{
+				text-align:center;
+			}
+		</style>
 	</head>
 
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -111,7 +116,10 @@
 										<div class="details_card_left">五级：</div>
 										<div class="inline-block"><span name="pushCount5">--</span>人</div>
 									</div>
-
+									<div class="col-xs-2">
+										<div class="details_card_left">六级及以上：</div>
+										<div class="inline-block"><span name="pushCountOther">--</span>人</div>
+									</div>
 								</div>
 							</div>
 							
@@ -135,6 +143,7 @@
 												<th>状态</th>
 												<th>收益</th>
 											</tr>
+											
 										</table>
 									</div>
 								</div>
@@ -228,19 +237,33 @@
 							}
 							
 						})
+						if(res.data.incomeInfo.length){
+							$.each(res.data.incomeInfo,function(index,item){
+								$("#income").append("<tr > <td>"+item.receiveOrderId+"</td> <td>"+item.userId+"</td> <td>"+codeType(item.codeType)+"</td> <td>"+item.orderMoney+"</td> <td>"+item.level+"</td> <td>"+Income(item.status)+"</td> <td>"+item.money+"</td></tr>")
+							})//income
+						}else{
+							$("#income").append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">暂无数据</td></tr>')
+						}
 						
-						$.each(res.data.incomeInfo,function(index,item){
-							$("#income").append("<tr> <td>"+item.receiveOrderId+"</td> <td>"+item.userId+"</td> <td>"+codeType(item.codeType)+"</td> <td>"+item.orderMoney+"</td> <td>"+item.level+"</td> <td>"+Income(item.status)+"</td> <td>"+item.money+"</td></tr>")
-						})//income
 						
 						
-						$.each(res.data.orderInfo,function(index,item){
-							$("#orderInfo").append("<tr> <td>"+"订单号"+"</td> <td>"+item.time+"</td> <td>"+item.receiveType+"</td> <td>"+orderStatus(item.status)+"</td> <td>"+item.money+"</td> <td>"+item.userIncome+"</td></tr>")
-						})//order
+						if(res.data.orderInfo.length){
+							$.each(res.data.orderInfo,function(index,item){
+								$("#orderInfo").append("<tr> <td>"+"订单号"+"</td> <td>"+item.time+"</td> <td>"+item.receiveType+"</td> <td>"+orderStatus(item.status)+"</td> <td>"+item.money+"</td> <td>"+item.userIncome+"</td></tr>")
+							})//order
+						}else{
+							$("#orderInfo").append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">暂无数据</td></tr>')
+						}
 						
-						$.each(res.data.codeInfo,function(index,item){
-							$("#code").append("<tr> <td>"+item.id+"</td> <td>"+codeType(item.type)+"</td> <td>"+item.codeUrl+"</td> <td>"+item.orderCount+"</td> <td>"+item.overOrderCount+"</td> <td>"+item.overRate+"</td><td>"+userStatus(item.status)+"</td></tr>")
-						})//
+						if(res.data.codeInfo.length){
+							$.each(res.data.codeInfo,function(index,item){
+								$("#code").append("<tr> <td>"+item.id+"</td> <td>"+codeType(item.type)+"</td> <td>"+item.codeUrl+"</td> <td>"+item.orderCount+"</td> <td>"+item.overOrderCount+"</td> <td>"+item.overRate+"</td><td>"+userStatus(item.status)+"</td></tr>")
+							})//
+						
+						}else{
+							$("#code").append('<tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">暂无数据</td></tr>')
+						}
+						
 						
 
 					} else {
