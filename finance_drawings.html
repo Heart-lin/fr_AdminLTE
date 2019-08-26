@@ -183,6 +183,7 @@
 				function rejectAjax(id) {
 					var param = {
 						id:$("#"+ id +" [name=id]").val(), //充值订单id
+						userId:$("#"+ id +" [name=userId]").val(),
 						remark:$("#"+ id +" [name=remark]").val(),
 						token: localStorage.getItem("fr_token")
 					}

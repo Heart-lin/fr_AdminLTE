@@ -35,7 +35,7 @@
 									<span>时间：</span>
 									<input type="text" class="form-control time" id="startTime" />
 									-
-									<input type="text" class="form-control time" id="endTime" />
+									<input type="text" class="form-control time" id="endTime1" />
 								</div>
 								<div class="inline-block">
 									<span>账号：</span>
@@ -119,7 +119,7 @@
 												<th>订单时间</th>
 												<th>订单金额</th>
 												<th>收款分类</th>
-												<th>所属ID</th>
+												<th>所属账号</th>
 												<th>用户收益/团队收益/平台收益</th>
 												<th>状态</th>
 												<th>操作</th>
@@ -180,10 +180,11 @@
 								curPage: d.start / 10 + 1,
 								pageSize: d.length,
 								startTime:$("#startTime").val(),
-								endTime:$("#endTime").val(),
+								endTime1:$("#endTime").val(),
 								status: $('#status').val(),
 								receiveType:$('#receiveType').val(),
-								userId: $('#userId').val(),
+//								userId: $('#userId').val(),
+								phone:$("#phone").val(),
 								token: localStorage.getItem('fr_token'),
 							}
 							return JSON.stringify(data)
@@ -234,7 +235,7 @@
 							}
 						},
 						{
-							data: 'userId'
+							data: 'phone'
 						},
 						{
 							data: null,

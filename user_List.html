@@ -54,7 +54,7 @@
 									</select>
 								</div>
 								<div class="inline-block">
-	<span>时间：</span>
+	<span>注册时间：</span>
 	<input type="text" class="form-control time" id="startTime" />
 	-
 	<input type="text" class="form-control time" id="endTime" />
@@ -127,6 +127,30 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="delete">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="setLeaderModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">设置领导人确认</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form">
+							<div class="box-body">
+								<div class="form-group">
+									<p id="model-phone">是否将“<span name="phone"></span>”设置为领导人</p>
+									<p class="text-red">（设置成领导人后将无法取消！）</p>
+									<input type="hidden" name="id"/>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary save">确认</button>
 					</div>
 				</div>
 			</div>
@@ -218,7 +242,12 @@
 						{
 							data: null,
 							render: function(data) {
-								return '<button class="btn bg-green margin-r-5 look" userId=' + data.id + '>查看</button><button class="btn bg-green margin-r-5 close_user" userId=' + data.id + '>封号</button>'
+								var leader="";
+								if(data.isLeader==-1){
+									leader='<button class="btn bg-green margin-r-5 leader" userId=' + data.id + ' phone='+data.phone+' >设置为领导人</button>'
+								}
+								
+								return '<button class="btn bg-green margin-r-5 look" userId=' + data.id + '>查看</button><button class="btn bg-green margin-r-5 close_user" userId=' + data.id + '>封号</button>'+leader
 							}
 						}
 
@@ -229,15 +258,6 @@
 					console.log(111);
 					table.ajax.reload()
 				})
-				//				$('#example2').DataTable({
-				//					'paging': true,
-				//					'lengthChange': false,
-				//					'searching': false,
-				//					'ordering': true,
-				//					'info': true,
-				//					'autoWidth': false
-				//				})
-
 				$('#startTime').datepicker({
 					autoclose: true,
 					format: 'yyyy-mm-dd',
@@ -276,6 +296,38 @@
 							} else if(res.returnCode == 200) {
 								table.draw(false);
 								$("#ToDelete").modal("hide");
+							} else {
+								
+							}
+						}
+					})
+				})
+				
+				$("#example").on("click",".leader",function(){
+					$("#setLeaderModal").modal("show");
+					console.log($(this).attr("phone"))
+					console.log($("#setLeaderModal").find("span[name=phone]"))
+					$("#setLeaderModal").find("input[name=id]").val($(this).attr("userId"));
+					$("#setLeaderModal").find("span[name=phone]").text($(this).attr("phone"));
+				})
+				
+				$("#setLeaderModal .save").click(function(){
+					$.ajax({
+						type: "post",
+						url: url + "user/setLeader",
+						async: true,
+						data: JSON.stringify({
+							id: $("#setLeaderModal [name=id]").val(),
+							token:localStorage.getItem('fr_token'),
+						}),
+						contentType: "application/json",
+						dataType: "json",
+						success: function(res) {
+							if(res.returnCode == 501) {
+								ToLogin(res)
+							} else if(res.returnCode == 200) {
+								table.draw(false);
+								$("#setLeaderModal").modal("hide");
 							} else {
 								
 							}

@@ -51,6 +51,9 @@
 										<option value="8">订单扣费</option>
 										<option value="9">转入</option>
 										<option value="10">收益转信用点</option>
+										<option value="11">提现失败返还</option>
+										<option value="12">转账失败返还</option>
+										<option value="13">订单取消返还</option>
 									</select>
 								</div>
 								<div class="inline-block">
@@ -167,16 +170,21 @@
 					 str = "转入"
 				} else if(type == 10) {
 					 str = "收益转信用点"
+				} else if(type == 11) {
+					 str = "提现失败返还"
+				} else if(type == 12) {
+					 str = "转账失败返还"
+				} else if(type == 13) {
+					 str = "订单取消返还"
 				}
 					return str;
 			}
-			
 			function financial_details_Money(type,num){
 				var str = "";
-				if(type==2||type==4||type==9||type==10) {
-					str = '<p class="text-green">+' + num + '</p>';
+				if(type==2||type==4||type==9||type==10||type == 11||type == 12) {
+					str = '<span class="text-green">+' + num + '</span>';
 				} else {
-					str = '<p class="text-red">-' +  num + '</p>';
+					str = '<span class="text-red">-' +  num + '</span>';
 				}
 				return str;
 			}

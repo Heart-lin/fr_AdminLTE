@@ -76,9 +76,9 @@ function userStatus(status) {
 function codeStatus(status) {
 	var str = "";
 	if(status == -1) {
-		str = '<a href="javascript:;"><div class="fr_status fr_danger">已风控</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_danger">停用</div></a>';
 	} else if(status == 1) {
-		str = '<a href="javascript:;"><div class="fr_status fr_info">正常</div></a>';
+		str = '<a href="javascript:;"><div class="fr_status fr_info">启用</div></a>';
 	}
 	return str;
 }
@@ -208,10 +208,12 @@ $(".picTable").on("click","img",function(){
 	if($(".imgpopup").length==0){
 		$("body").append("<div class='popup imgpopup'><img src="+$(this).attr("src")+"></div>");
 	}else{
+		$(".imgpopup img").attr("src",$(this).attr("src"));
+		
 		$(".imgpopup").show();
-	}
-	
+	}	
 })
+
 $("body").on("click",".imgpopup",function(){
 	$(this).hide();
 })

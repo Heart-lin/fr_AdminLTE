@@ -46,8 +46,8 @@
 								<div class="inline-block">
 									<select id="status">
 										<option value="">全部状态</option>
-										<option value="-1">已风控</option>
-										<option value="1">正常</option>
+										<option value="-1">停用</option>
+										<option value="1">启用</option>
 									</select>
 								</div>
 								
@@ -175,7 +175,8 @@
 								startTime:$("#startTime").val(),
 								endTime:$("#endTime").val(),
 								status: $('#status').val(),
-								userId: $('#userId').val(),
+//								userId: $('#userId').val(),
+								phone:$("#phone").val(),
 								token: localStorage.getItem('fr_token'),
 							}
 							return JSON.stringify(data)
